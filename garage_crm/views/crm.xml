@@ -1,0 +1,39 @@
+<odoo>
+    <record id="lead_garage_form" model="ir.ui.view">
+        <field name="name">crm.lead.garage</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_garage_job" type="object" string="Create / Open Job Card" invisible="not garage_vehicle_id or not partner_id" groups="garage_core.group_garage_user" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Garage">
+                    <group>
+                        <field name="garage_vehicle_id" domain="[('customer_id', '=', partner_id)] if partner_id else []" />
+                        <field name="garage_service_type_id" />
+                    </group>
+                    <field name="garage_job_ids" readonly="1" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_action" model="ir.actions.act_window">
+        <field name="name">Service Enquiries</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,calendar,graph,pivot,activity</field>
+        <field name="domain">['|', '|', ('garage_service_enquiry', '=', True), ('garage_vehicle_id', '!=', False), ('garage_job_ids', '!=', False)]</field>
+        <field name="context">{'default_type': 'opportunity', 'default_garage_service_enquiry': True}</field>
+    </record>
+    <menuitem id="crm_menu" name="CRM" parent="garage_core.menu_garage_root" action="crm_action" sequence="15" groups="garage_core.group_garage_user" />
+    <record id="job_crm_form" model="ir.ui.view">
+        <field name="name">job.crm.source</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <field name="previous_job_id" position="after">
+                <field name="lead_id" readonly="1" />
+            </field>
+        </field>
+    </record>
+</odoo>

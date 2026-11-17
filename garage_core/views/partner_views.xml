@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_partner_garage" model="ir.ui.view">
+        <field name="name">res.partner.garage</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Garage" groups="garage_core.group_garage_staff">
+                    <group>
+                        <field name="is_garage_customer" />
+                        <field name="garage_notes" />
+                    </group>
+                    <separator string="Current Vehicles" />
+                    <field name="garage_vehicle_ids" readonly="1" />
+                    <separator string="Service Visits" />
+                    <field name="garage_job_card_ids" readonly="1" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_customers" model="ir.actions.act_window">
+        <field name="name">Garage Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_garage_customer', '=', True)]</field>
+        <field name="context">{'default_is_garage_customer': True}</field>
+    </record>
+</odoo>

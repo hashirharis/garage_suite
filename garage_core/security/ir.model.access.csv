@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_garage_vehicle,Garage garage.vehicle,model_garage_vehicle,group_garage_user,1,1,1,0
+access_garage_vehicle_history,Garage garage.vehicle.history,model_garage_vehicle_history,group_garage_user,1,0,0,0
+access_garage_job_card,Garage garage.job.card,model_garage_job_card,group_garage_user,1,1,1,0
+access_garage_job_complaint,Garage garage.job.complaint,model_garage_job_complaint,group_garage_user,1,1,1,0
+access_garage_job_card_line,Garage garage.job.card.line,model_garage_job_card_line,group_garage_user,1,1,1,0
+read_vehicle,Workshop reader,model_garage_vehicle,group_garage_staff,1,0,0,0
+read_vehicle_history,Workshop reader,model_garage_vehicle_history,group_garage_staff,1,0,0,0
+read_job_card,Workshop reader,model_garage_job_card,group_garage_staff,1,0,0,0
+read_job_complaint,Workshop reader,model_garage_job_complaint,group_garage_staff,1,0,0,0
+read_job_card_line,Workshop reader,model_garage_job_card_line,group_garage_staff,1,0,0,0
+technician_job_card,technician access,model_garage_job_card,group_garage_technician,1,1,0,0
+technician_job_complaint,technician access,model_garage_job_complaint,group_garage_technician,1,1,0,0
+technician_job_card_line,technician access,model_garage_job_card_line,group_garage_technician,1,1,0,0
+quality_job_card,quality access,model_garage_job_card,group_garage_quality,1,1,0,0
+quality_job_complaint,quality access,model_garage_job_complaint,group_garage_quality,1,1,0,0
+quality_job_card_line,quality access,model_garage_job_card_line,group_garage_quality,1,1,0,0
+reception_vehicle,Reception access,model_garage_vehicle,group_garage_receptionist,1,1,1,0
+reception_job_card,Reception access,model_garage_job_card,group_garage_receptionist,1,1,1,0
+reception_job_complaint,Reception access,model_garage_job_complaint,group_garage_receptionist,1,1,1,0

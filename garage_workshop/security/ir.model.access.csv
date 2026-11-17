@@ -1,0 +1,30 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+garage_appointment_read,garage.appointment,model_garage_appointment,garage_core.group_garage_staff,1,0,0,0
+garage_appointment_user,garage.appointment,model_garage_appointment,garage_core.group_garage_user,1,1,1,0
+garage_inspection_template_read,garage.inspection.template,model_garage_inspection_template,garage_core.group_garage_staff,1,0,0,0
+garage_inspection_template_manager,garage.inspection.template,model_garage_inspection_template,garage_core.group_garage_manager,1,1,1,0
+garage_inspection_template_line_read,garage.inspection.template.line,model_garage_inspection_template_line,garage_core.group_garage_staff,1,0,0,0
+garage_inspection_template_line_manager,garage.inspection.template.line,model_garage_inspection_template_line,garage_core.group_garage_manager,1,1,1,0
+garage_inspection_read,garage.inspection,model_garage_inspection,garage_core.group_garage_staff,1,0,0,0
+garage_inspection_user,garage.inspection,model_garage_inspection,garage_core.group_garage_user,1,1,1,0
+garage_inspection_quality,garage.inspection,model_garage_inspection,garage_core.group_garage_quality,1,1,0,0
+garage_inspection_technician,garage.inspection,model_garage_inspection,garage_core.group_garage_technician,1,1,0,0
+garage_inspection_line_read,garage.inspection.line,model_garage_inspection_line,garage_core.group_garage_staff,1,0,0,0
+garage_inspection_line_user,garage.inspection.line,model_garage_inspection_line,garage_core.group_garage_user,1,1,1,0
+garage_inspection_line_quality,garage.inspection.line,model_garage_inspection_line,garage_core.group_garage_quality,1,1,0,0
+garage_inspection_line_technician,garage.inspection.line,model_garage_inspection_line,garage_core.group_garage_technician,1,1,0,0
+garage_job_time_entry_read,garage.job.time.entry,model_garage_job_time_entry,garage_core.group_garage_staff,1,0,0,0
+garage_job_time_entry_technician,garage.job.time.entry,model_garage_job_time_entry,garage_core.group_garage_technician,1,1,1,0
+garage_part_movement_read,garage.part.movement,model_garage_part_movement,garage_core.group_garage_staff,1,0,0,0
+garage_part_movement_storekeeper,garage.part.movement,model_garage_part_movement,garage_core.group_garage_storekeeper,1,0,1,0
+garage_part_movement_technician,garage.part.movement,model_garage_part_movement,garage_core.group_garage_technician,1,0,1,0
+garage_service_reminder_read,garage.service.reminder,model_garage_service_reminder,garage_core.group_garage_staff,1,0,0,0
+garage_service_reminder_user,garage.service.reminder,model_garage_service_reminder,garage_core.group_garage_user,1,1,1,0
+sale_order_read,Garage estimate read,sale.model_sale_order,garage_core.group_garage_cashier,1,0,0,0
+sale_order_line_read,Garage estimate read,sale.model_sale_order_line,garage_core.group_garage_cashier,1,0,0,0
+
+garage_appointment_reception,Reception appointments,model_garage_appointment,garage_core.group_garage_receptionist,1,1,1,0
+scope_sale_order_user,Garage financial scope,sale.model_sale_order,garage_core.group_garage_user,1,0,0,0
+scope_sale_order_owner,Garage financial scope,sale.model_sale_order,garage_core.group_garage_owner,1,0,0,0
+scope_sale_order_line_user,Garage financial scope,sale.model_sale_order_line,garage_core.group_garage_user,1,0,0,0
+scope_sale_order_line_owner,Garage financial scope,sale.model_sale_order_line,garage_core.group_garage_owner,1,0,0,0

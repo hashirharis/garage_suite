@@ -1,0 +1,9 @@
+<odoo>
+    <record id="action_country_taxes" model="ir.actions.act_window">
+        <field name="name">Bahrain Company Taxes</field>
+        <field name="res_model">account.tax</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('company_id.country_id.code','=','BH')]</field>
+    </record>
+    <menuitem id="menu_localization" name="Bahrain Taxes" parent="garage_service_billing.finance_config" action="action_country_taxes" groups="account.group_account_manager" />
+</odoo>

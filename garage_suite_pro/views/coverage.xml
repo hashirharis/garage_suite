@@ -1,0 +1,192 @@
+<odoo>
+    <record id="contracts_list" model="ir.ui.view">
+        <field name="name">garage.service.contract.contracts_list</field>
+        <field name="model">garage.service.contract</field>
+        <field name="arch" type="xml">
+            <list string="Warranty, AMC and Fleet Contracts">
+                <field name="name" />
+                <field name="kind" />
+                <field name="customer_id" />
+                <field name="date_start" />
+                <field name="date_end" />
+                <field name="committed_visits" />
+                <field name="committed_coverage" />
+                <field name="operating_contribution" />
+                <field name="state" widget="badge" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="contracts_form" model="ir.ui.view">
+        <field name="name">garage.service.contract.contracts_form</field>
+        <field name="model">garage.service.contract</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Warranty, AMC and Fleet Contracts">
+                <header>
+                    <button name="action_activate" type="object" string="Activate Contract" invisible="state != 'draft'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_close" type="object" string="Close Contract" invisible="state != 'active'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_renew" type="object" string="Create Renewal" invisible="state == 'draft'" groups="garage_suite_pro.group_garage_coverage" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Warranty, AMC and Fleet Contracts</h1>
+                    </div>
+                    <group>
+                        <group string="Contract">
+                            <field name="name" />
+                            <field name="company_id" readonly="state != 'draft'" />
+                            <field name="kind" readonly="state != 'draft'" />
+                            <field name="customer_id" readonly="state != 'draft'" />
+                            <field name="vehicle_ids" readonly="state != 'draft'" widget="many2many_tags" />
+                            <field name="renewed_from_id" />
+                        </group>
+                        <group string="Terms and limits">
+                            <field name="date_start" readonly="state != 'draft'" />
+                            <field name="date_end" readonly="state != 'draft'" />
+                            <field name="visit_limit" readonly="state != 'draft'" />
+                            <field name="coverage_limit" readonly="state != 'draft'" />
+                            <field name="contract_value" readonly="state != 'draft'" />
+                            <field name="terms" readonly="state != 'draft'" />
+                        </group>
+                        <group string="Contract operating contribution">
+                            <field name="committed_visits" />
+                            <field name="committed_coverage" />
+                            <field name="service_cost" />
+                            <field name="operating_contribution" />
+                            <field name="entitlement_ids" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_contracts" model="ir.actions.act_window">
+        <field name="name">Warranty, AMC and Fleet Contracts</field>
+        <field name="res_model">garage.service.contract</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+    <record id="entitlements_list" model="ir.ui.view">
+        <field name="name">garage.contract.entitlement.entitlements_list</field>
+        <field name="model">garage.contract.entitlement</field>
+        <field name="arch" type="xml">
+            <list string="Contract Entitlements">
+                <field name="job_id" />
+                <field name="contract_id" />
+                <field name="amount" />
+                <field name="state" widget="badge" />
+                <field name="approver_id" />
+                <field name="approved_at" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="entitlements_form" model="ir.ui.view">
+        <field name="name">garage.contract.entitlement.entitlements_form</field>
+        <field name="model">garage.contract.entitlement</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Contract Entitlements">
+                <header>
+                    <button name="action_approve" type="object" string="Approve Entitlement" invisible="state != 'draft'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_consume" type="object" string="Record Consumption" invisible="state != 'approved'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_cancel" type="object" string="Cancel Entitlement" invisible="state not in ['draft', 'approved']" groups="garage_suite_pro.group_garage_coverage" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Contract Entitlements</h1>
+                    </div>
+                    <group>
+                        <group string="Coverage request">
+                            <field name="job_id" readonly="id" />
+                            <field name="contract_id" readonly="id" />
+                            <field name="scope" readonly="state != 'draft'" />
+                            <field name="amount" readonly="state != 'draft'" />
+                        </group>
+                        <group string="Approval evidence">
+                            <field name="approver_id" />
+                            <field name="approved_at" />
+                            <field name="cancellation_reason" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_entitlements" model="ir.actions.act_window">
+        <field name="name">Contract Entitlements</field>
+        <field name="res_model">garage.contract.entitlement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="claims_list" model="ir.ui.view">
+        <field name="name">garage.insurance.claim.claims_list</field>
+        <field name="model">garage.insurance.claim</field>
+        <field name="arch" type="xml">
+            <list string="Insurance Claims">
+                <field name="name" />
+                <field name="job_id" />
+                <field name="insurer_id" />
+                <field name="estimate_id" />
+                <field name="insurer_share" />
+                <field name="customer_share" />
+                <field name="settled_amount" />
+                <field name="outstanding" />
+                <field name="state" widget="badge" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="claims_form" model="ir.ui.view">
+        <field name="name">garage.insurance.claim.claims_form</field>
+        <field name="model">garage.insurance.claim</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Insurance Claims">
+                <header>
+                    <button name="action_submit" type="object" string="Submit Assessment" invisible="state != 'draft'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_approve" type="object" string="Record Surveyor Approval" invisible="state != 'submitted'" groups="garage_suite_pro.group_garage_coverage" />
+                    <button name="action_settle" type="object" string="Verify Full Settlement" invisible="state != 'approved'" groups="account.group_account_invoice" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Insurance Claims</h1>
+                    </div>
+                    <group>
+                        <group string="Claim and policy">
+                            <field name="name" readonly="state != 'draft'" />
+                            <field name="job_id" readonly="state != 'draft'" />
+                            <field name="insurer_id" readonly="state != 'draft'" />
+                            <field name="policy_reference" readonly="state != 'draft'" />
+                            <field name="surveyor_id" readonly="state != 'draft'" />
+                            <field name="estimate_id" readonly="state != 'draft'" />
+                            <field name="previous_claim_id" readonly="state != 'draft'" />
+                            <field name="assessment" readonly="state != 'draft'" />
+                        </group>
+                        <group string="Payer allocation">
+                            <field name="insurer_share" readonly="state != 'draft'" />
+                            <field name="customer_share" readonly="state != 'draft'" />
+                            <field name="deductible" readonly="state != 'draft'" />
+                            <field name="depreciation" readonly="state != 'draft'" />
+                            <field name="settled_amount" />
+                            <field name="outstanding" />
+                        </group>
+                        <group string="Approval and settlement">
+                            <field name="approval_evidence" readonly="state in ['approved', 'settled']" />
+                            <field name="approved_by" />
+                            <field name="approved_at" />
+                            <field name="payment_id" readonly="state == 'settled'" groups="account.group_account_invoice" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_claims" model="ir.actions.act_window">
+        <field name="name">Insurance Claims</field>
+        <field name="res_model">garage.insurance.claim</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+</odoo>

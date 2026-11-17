@@ -1,0 +1,95 @@
+<odoo noupdate="1">
+    <record id="appointment_seq" model="ir.sequence">
+        <field name="name">Workshop Appointment</field>
+        <field name="code">garage.appointment</field>
+        <field name="prefix">APT/%(year)s/</field>
+        <field name="padding">6</field>
+    </record>
+    <record id="reminder_cron" model="ir.cron">
+        <field name="name">Garage: Due follow-up activities</field>
+        <field name="model_id" ref="model_garage_service_reminder" />
+        <field name="state">code</field>
+        <field name="code">model._cron_due_activities()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+    <record id="template_reception" model="garage.inspection.template">
+        <field name="name">Vehicle Reception</field>
+        <field name="phase">reception</field>
+        <field name="company_id" eval="False" />
+        <field name="default_for_jobs" eval="True" />
+    </record>
+    <record id="template_reception_0" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_reception" />
+        <field name="name">Vehicle condition and accessories recorded</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_reception_1" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_reception" />
+        <field name="name">Odometer and identity checked</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_technical" model="garage.inspection.template">
+        <field name="name">Technical Inspection</field>
+        <field name="phase">technical</field>
+        <field name="company_id" eval="False" />
+        <field name="default_for_jobs" eval="True" />
+    </record>
+    <record id="template_technical_0" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_technical" />
+        <field name="name">Diagnosis recorded</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_technical_1" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_technical" />
+        <field name="name">Safety defects assessed</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_final" model="garage.inspection.template">
+        <field name="name">Final Quality</field>
+        <field name="phase">final</field>
+        <field name="company_id" eval="False" />
+        <field name="default_for_jobs" eval="True" />
+    </record>
+    <record id="template_final_0" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_final" />
+        <field name="name">Approved work complete</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_final_1" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_final" />
+        <field name="name">Road test and safety verification</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_final_2" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_final" />
+        <field name="name">No leaks or warning lights</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_final_3" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_final" />
+        <field name="name">Vehicle cleaned</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_delivery" model="garage.inspection.template">
+        <field name="name">Delivery Checklist</field>
+        <field name="phase">delivery</field>
+        <field name="company_id" eval="False" />
+        <field name="default_for_jobs" eval="True" />
+    </record>
+    <record id="template_delivery_0" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_delivery" />
+        <field name="name">Recipient identity checked</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_delivery_1" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_delivery" />
+        <field name="name">Accessories and documents handed over</field>
+        <field name="mandatory" eval="True" />
+    </record>
+    <record id="template_delivery_2" model="garage.inspection.template.line">
+        <field name="template_id" ref="template_delivery" />
+        <field name="name">Customer acknowledgment recorded</field>
+        <field name="mandatory" eval="True" />
+    </record>
+</odoo>

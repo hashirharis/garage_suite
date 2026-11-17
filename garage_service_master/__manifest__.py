@@ -1,0 +1,13 @@
+{'name': 'Garage Service and Vehicle Masters',
+ 'version': '19.0.1.0.0',
+ 'author': 'Garage Suite',
+ 'license': 'LGPL-3',
+ 'category': 'Services/Garage',
+ 'depends': ['garage_core', 'product'],
+ 'data': ['security/ir.model.access.csv',
+          'security/rules.xml',
+          'data/masters.xml',
+          'views/masters.xml'],
+ 'pre_init_hook': 'pre_init_hook',
+ 'post_init_hook': 'post_init_hook',
+ 'installable': True}

@@ -1,0 +1,239 @@
+<odoo>
+    <record id="profit_pivot" model="ir.ui.view">
+        <field name="name">garage.job.card.profit_pivot</field>
+        <field name="model">garage.job.card</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <pivot string="Executive Workshop Profitability" disable_linking="0">
+                <field name="company_id" type="row" />
+                <field name="advisor_id" type="row" />
+                <field name="date" type="col" interval="month" />
+                <field name="service_revenue" type="measure" />
+                <field name="service_cost" type="measure" />
+                <field name="service_margin" type="measure" />
+                <field name="estimated_hours" type="measure" />
+                <field name="actual_hours" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="profit_search" model="ir.ui.view">
+        <field name="name">garage.job.card.profit_search</field>
+        <field name="model">garage.job.card</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <search string="Executive Workshop Profitability">
+                <field name="company_id" />
+                <field name="advisor_id" />
+                <field name="service_type_id" />
+                <field name="bay_id" />
+                <field name="customer_id" />
+                <field name="vehicle_id" />
+                <field name="state" />
+                <filter name="report_period" string="Reporting Period" date="date" />
+                <filter name="group_company_id" string="Company" context="{'group_by': 'company_id'}" />
+                <filter name="group_advisor_id" string="Advisor" context="{'group_by': 'advisor_id'}" />
+                <filter name="group_service_type_id" string="Service Type" context="{'group_by': 'service_type_id'}" />
+                <filter name="group_bay_id" string="Bay" context="{'group_by': 'bay_id'}" />
+            </search>
+        </field>
+    </record>
+    <record id="action_profit" model="ir.actions.act_window">
+        <field name="name">Executive Workshop Profitability</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="domain">[('state', 'in', ['ready', 'delivered', 'closed'])]</field>
+        <field name="view_id" ref="profit_pivot" />
+        <field name="search_view_id" ref="profit_search" />
+        <field name="context">{'create': False}</field>
+    </record>
+    <record id="productivity_pivot" model="ir.ui.view">
+        <field name="name">garage.workshop.task.productivity_pivot</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <pivot string="Workshop Schedule Variance" disable_linking="0">
+                <field name="company_id" type="row" />
+                <field name="employee_id" type="row" />
+                <field name="planned_start" type="col" interval="month" />
+                <field name="planned_hours" type="measure" />
+                <field name="actual_hours" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="productivity_search" model="ir.ui.view">
+        <field name="name">garage.workshop.task.productivity_search</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <search string="Workshop Schedule Variance">
+                <field name="company_id" />
+                <field name="employee_id" />
+                <field name="bay_id" />
+                <field name="state" />
+                <filter name="report_period" string="Reporting Period" date="planned_start" />
+                <filter name="group_company_id" string="Company" context="{'group_by': 'company_id'}" />
+                <filter name="group_employee_id" string="Employee" context="{'group_by': 'employee_id'}" />
+                <filter name="group_bay_id" string="Bay" context="{'group_by': 'bay_id'}" />
+                <filter name="group_state" string="State" context="{'group_by': 'state'}" />
+            </search>
+        </field>
+    </record>
+    <record id="action_productivity" model="ir.actions.act_window">
+        <field name="name">Workshop Schedule Variance</field>
+        <field name="res_model">garage.workshop.task</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="domain">[('state', 'in', ['scheduled', 'working', 'done'])]</field>
+        <field name="view_id" ref="productivity_pivot" />
+        <field name="search_view_id" ref="productivity_search" />
+        <field name="context">{'create': False}</field>
+    </record>
+    <record id="contract_profit_pivot" model="ir.ui.view">
+        <field name="name">garage.service.contract.contract_profit_pivot</field>
+        <field name="model">garage.service.contract</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <pivot string="Contract Contribution" disable_linking="0">
+                <field name="company_id" type="row" />
+                <field name="kind" type="row" />
+                <field name="date_start" type="col" interval="month" />
+                <field name="contract_value" type="measure" />
+                <field name="committed_visits" type="measure" />
+                <field name="committed_coverage" type="measure" />
+                <field name="service_cost" type="measure" />
+                <field name="operating_contribution" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="contract_profit_search" model="ir.ui.view">
+        <field name="name">garage.service.contract.contract_profit_search</field>
+        <field name="model">garage.service.contract</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <search string="Contract Contribution">
+                <field name="company_id" />
+                <field name="customer_id" />
+                <field name="kind" />
+                <field name="state" />
+                <filter name="report_period" string="Reporting Period" date="date_start" />
+                <filter name="group_company_id" string="Company" context="{'group_by': 'company_id'}" />
+                <filter name="group_customer_id" string="Customer" context="{'group_by': 'customer_id'}" />
+                <filter name="group_kind" string="Kind" context="{'group_by': 'kind'}" />
+                <filter name="group_state" string="State" context="{'group_by': 'state'}" />
+            </search>
+        </field>
+    </record>
+    <record id="action_contract_profit" model="ir.actions.act_window">
+        <field name="name">Contract Contribution</field>
+        <field name="res_model">garage.service.contract</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="domain">[('state', 'in', ['active', 'closed'])]</field>
+        <field name="view_id" ref="contract_profit_pivot" />
+        <field name="search_view_id" ref="contract_profit_search" />
+        <field name="context">{'create': False}</field>
+    </record>
+    <record id="claim_balances_pivot" model="ir.ui.view">
+        <field name="name">garage.insurance.claim.claim_balances_pivot</field>
+        <field name="model">garage.insurance.claim</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <pivot string="Insurance Claim Exposure" disable_linking="0">
+                <field name="company_id" type="row" />
+                <field name="insurer_id" type="row" />
+                <field name="state" type="col" />
+                <field name="insurer_share" type="measure" />
+                <field name="customer_share" type="measure" />
+                <field name="settled_amount" type="measure" />
+                <field name="outstanding" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="claim_balances_search" model="ir.ui.view">
+        <field name="name">garage.insurance.claim.claim_balances_search</field>
+        <field name="model">garage.insurance.claim</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <search string="Insurance Claim Exposure">
+                <field name="company_id" />
+                <field name="insurer_id" />
+                <field name="job_id" />
+                <field name="state" />
+                <filter name="report_period" string="Reporting Period" date="approved_at" />
+                <filter name="group_company_id" string="Company" context="{'group_by': 'company_id'}" />
+                <filter name="group_insurer_id" string="Insurer" context="{'group_by': 'insurer_id'}" />
+                <filter name="group_job_id" string="Job" context="{'group_by': 'job_id'}" />
+                <filter name="group_state" string="State" context="{'group_by': 'state'}" />
+            </search>
+        </field>
+    </record>
+    <record id="action_claim_balances" model="ir.actions.act_window">
+        <field name="name">Insurance Claim Exposure</field>
+        <field name="res_model">garage.insurance.claim</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="domain">[('state', 'in', ['approved', 'settled'])]</field>
+        <field name="view_id" ref="claim_balances_pivot" />
+        <field name="search_view_id" ref="claim_balances_search" />
+        <field name="context">{'create': False}</field>
+    </record>
+    <record id="action_counter_sales" model="ir.actions.act_window">
+        <field name="name">Retail and Wholesale Sales</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('garage_job_id', '=', False)]</field>
+    </record>
+    <record id="action_branches" model="ir.actions.act_window">
+        <field name="name">Companies and Branches</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('id', 'in', allowed_company_ids)]</field>
+    </record>
+    <record id="technician_contribution_pivot" model="ir.ui.view">
+        <field name="name">garage.technician.contribution.pivot</field>
+        <field name="model">garage.technician.contribution</field>
+        <field name="arch" type="xml">
+            <pivot string="Technician Labour Contribution">
+                <field name="company_id" type="row" />
+                <field name="technician_id" type="row" />
+                <field name="date" type="col" interval="month" />
+                <field name="hours" type="measure" />
+                <field name="allocated_revenue" type="measure" />
+                <field name="direct_cost" type="measure" />
+                <field name="contribution" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="technician_contribution_list" model="ir.ui.view">
+        <field name="name">garage.technician.contribution.list</field>
+        <field name="model">garage.technician.contribution</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0">
+                <field name="date" />
+                <field name="job_id" />
+                <field name="technician_id" />
+                <field name="product_id" />
+                <field name="hours" />
+                <field name="allocated_revenue" />
+                <field name="direct_cost" />
+                <field name="contribution" />
+                <field name="currency_id" column_invisible="True" />
+            </list>
+        </field>
+    </record>
+    <record id="technician_contribution_search" model="ir.ui.view">
+        <field name="name">garage.technician.contribution.search</field>
+        <field name="model">garage.technician.contribution</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="technician_id" />
+                <field name="company_id" />
+                <field name="job_id" />
+                <field name="product_id" />
+                <filter name="period" string="Labour Period" date="date" />
+            </search>
+        </field>
+    </record>
+    <record id="action_technician_contribution" model="ir.actions.act_window">
+        <field name="name">Technician Labour Contribution</field>
+        <field name="res_model">garage.technician.contribution</field>
+        <field name="view_mode">pivot,list</field>
+    </record>
+</odoo>

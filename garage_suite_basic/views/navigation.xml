@@ -1,0 +1,81 @@
+<odoo>
+    <menuitem id="customers_vehicles" name="Customers &amp; Vehicles" parent="garage_core.menu_garage_root" sequence="10" />
+    <menuitem id="front_desk" name="Front Desk" parent="garage_core.menu_garage_root" sequence="20" />
+    <record id="garage_core.menu_customers" model="ir.ui.menu">
+        <field name="name">Customer Directory</field>
+        <field name="parent_id" ref="customers_vehicles" />
+        <field name="sequence">10</field>
+    </record>
+    <record id="garage_core.menu_vehicles" model="ir.ui.menu">
+        <field name="name">Vehicle Registry</field>
+        <field name="parent_id" ref="customers_vehicles" />
+        <field name="sequence">20</field>
+    </record>
+    <record id="garage_crm.crm_menu" model="ir.ui.menu">
+        <field name="name">CRM Enquiries</field>
+        <field name="parent_id" ref="front_desk" />
+        <field name="sequence">10</field>
+    </record>
+    <record id="garage_workshop.appointments_menu" model="ir.ui.menu">
+        <field name="name">Appointments</field>
+        <field name="parent_id" ref="front_desk" />
+        <field name="sequence">20</field>
+    </record>
+    <record id="garage_workshop.followups_menu" model="ir.ui.menu">
+        <field name="name">Follow-ups</field>
+        <field name="parent_id" ref="front_desk" />
+        <field name="sequence">30</field>
+    </record>
+    <record id="garage_workshop.garage_appointment_menu" model="ir.ui.menu">
+        <field name="name">Appointment Register</field>
+        <field name="parent_id" ref="garage_workshop.appointments_menu" />
+        <field name="sequence">20</field>
+    </record>
+    <record id="garage_workshop.garage_inspection_menu" model="ir.ui.menu">
+        <field name="name">Inspections</field>
+        <field name="parent_id" ref="garage_core.menu_workshop" />
+        <field name="sequence">30</field>
+    </record>
+    <record id="garage_workshop.garage_job_time_entry_menu" model="ir.ui.menu">
+        <field name="name">Technician Time</field>
+        <field name="parent_id" ref="garage_core.menu_workshop" />
+        <field name="sequence">40</field>
+    </record>
+    <record id="garage_workshop.garage_part_movement_menu" model="ir.ui.menu">
+        <field name="name">Parts Movements</field>
+        <field name="parent_id" ref="garage_core.menu_workshop" />
+        <field name="sequence">50</field>
+    </record>
+    <menuitem id="commercial" name="Commercial" parent="garage_core.menu_garage_root" sequence="40" />
+    <record id="garage_workshop.estimates_menu" model="ir.ui.menu">
+        <field name="name">Estimates</field>
+        <field name="parent_id" ref="commercial" />
+        <field name="sequence">10</field>
+    </record>
+    <record id="garage_service_billing.billing_menu" model="ir.ui.menu">
+        <field name="name">Service Billing</field>
+        <field name="parent_id" ref="commercial" />
+        <field name="sequence">20</field>
+    </record>
+    <record id="my_assignments_action" model="ir.actions.act_window">
+        <field name="name">My Assigned Jobs</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('technician_ids', 'in', [uid]), ('state', 'in', ['authorized','in_progress','on_hold'])]</field>
+    </record>
+    <menuitem id="my_assignments_menu" name="My Assigned Jobs" parent="garage_core.menu_workshop" action="my_assignments_action" groups="garage_core.group_garage_technician" sequence="20" />
+    <record id="quality_queue_action" model="ir.actions.act_window">
+        <field name="name">Quality Check Queue</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'quality_check')]</field>
+    </record>
+    <menuitem id="quality_queue_menu" name="Quality Check Queue" parent="garage_core.menu_workshop" action="quality_queue_action" groups="garage_core.group_garage_quality" sequence="20" />
+    <record id="ready_queue_action" model="ir.actions.act_window">
+        <field name="name">Ready for Delivery</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'ready')]</field>
+    </record>
+    <menuitem id="ready_queue_menu" name="Ready for Delivery" parent="garage_core.menu_workshop" action="ready_queue_action" groups="garage_core.group_garage_staff" sequence="20" />
+</odoo>

@@ -1,0 +1,32 @@
+<odoo noupdate="1">
+    <record id="service_type_general" model="garage.service.type">
+        <field name="name">General Service</field>
+        <field name="code">GENERAL</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="service_type_periodic" model="garage.service.type">
+        <field name="name">Periodic Service</field>
+        <field name="code">PERIODIC</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="service_type_repair" model="garage.service.type">
+        <field name="name">Repair</field>
+        <field name="code">REPAIR</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="hold_parts" model="garage.hold.reason">
+        <field name="name">Waiting for Parts</field>
+        <field name="category">parts</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="hold_approval" model="garage.hold.reason">
+        <field name="name">Waiting for Customer Approval</field>
+        <field name="category">approval</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="hold_other" model="garage.hold.reason">
+        <field name="name">Operational Hold</field>
+        <field name="category">other</field>
+        <field name="company_id" eval="False" />
+    </record>
+</odoo>

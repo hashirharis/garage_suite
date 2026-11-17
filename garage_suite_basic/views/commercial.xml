@@ -1,0 +1,70 @@
+<odoo>
+    <record id="service_estimate_list" model="ir.ui.view">
+        <field name="name">garage.service.estimate.list</field>
+        <field name="model">sale.order</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Service Estimates" create="0" class="gs-workspace-list">
+                <field name="name" string="Estimate" />
+                <field name="garage_job_id" string="Job Card" />
+                <field name="partner_id" string="Customer" />
+                <field name="garage_version" string="Revision" />
+                <field name="garage_consent" string="Customer Consent" widget="badge"
+                       decoration-success="garage_consent == 'approved'"
+                       decoration-warning="garage_consent == 'issued'"
+                       decoration-danger="garage_consent == 'rejected'" />
+                <field name="date_order" string="Estimate Date" />
+                <field name="validity_date" optional="hide" />
+                <field name="currency_id" column_invisible="True" />
+                <field name="amount_total" widget="monetary" />
+            </list>
+        </field>
+    </record>
+    <record id="service_invoice_list" model="ir.ui.view">
+        <field name="name">garage.service.invoice.list</field>
+        <field name="model">account.move</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Service Invoices" create="0" class="gs-workspace-list">
+                <field name="name" string="Document" />
+                <field name="garage_job_id" string="Job Card" />
+                <field name="partner_id" string="Customer" />
+                <field name="move_type" string="Document Type" optional="hide" />
+                <field name="invoice_date" />
+                <field name="state" widget="badge" decoration-success="state == 'posted'" />
+                <field name="payment_state" widget="badge" decoration-success="payment_state == 'paid'"
+                       decoration-warning="payment_state in ['partial', 'in_payment']" />
+                <field name="currency_id" column_invisible="True" />
+                <field name="amount_total" widget="monetary" />
+                <field name="amount_residual" string="Amount Due" widget="monetary" />
+            </list>
+        </field>
+    </record>
+    <record id="service_payment_list" model="ir.ui.view">
+        <field name="name">garage.service.payment.list</field>
+        <field name="model">account.payment</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Service Payments" create="0" class="gs-workspace-list">
+                <field name="name" string="Payment" />
+                <field name="date" />
+                <field name="partner_id" string="Customer" />
+                <field name="journal_id" />
+                <field name="payment_type" optional="hide" />
+                <field name="state" widget="badge" decoration-success="state == 'paid'"
+                       decoration-warning="state == 'in_process'" />
+                <field name="currency_id" column_invisible="True" />
+                <field name="amount" widget="monetary" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_workshop.estimate_action" model="ir.actions.act_window">
+        <field name="view_id" ref="service_estimate_list" />
+    </record>
+    <record id="garage_service_billing.invoice_action" model="ir.actions.act_window">
+        <field name="view_id" ref="service_invoice_list" />
+    </record>
+    <record id="garage_service_billing.payments_action" model="ir.actions.act_window">
+        <field name="view_id" ref="service_payment_list" />
+    </record>
+</odoo>

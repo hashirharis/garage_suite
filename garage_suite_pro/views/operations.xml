@@ -1,0 +1,119 @@
+<odoo>
+    <record id="requests_list" model="ir.ui.view">
+        <field name="name">garage.purchase.request.requests_list</field>
+        <field name="model">garage.purchase.request</field>
+        <field name="arch" type="xml">
+            <list string="Parts Purchase Requests">
+                <field name="name" />
+                <field name="product_id" />
+                <field name="quantity" />
+                <field name="needed_by" />
+                <field name="requester_id" />
+                <field name="vendor_id" />
+                <field name="state" widget="badge" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="requests_form" model="ir.ui.view">
+        <field name="name">garage.purchase.request.requests_form</field>
+        <field name="model">garage.purchase.request</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Parts Purchase Requests">
+                <header>
+                    <button name="action_submit" type="object" string="Submit Request" invisible="state != 'draft'" />
+                    <button name="action_approve" type="object" string="Approve Request" invisible="state != 'submitted'" groups="garage_suite_pro.group_garage_purchase_approver" />
+                    <button name="action_create_rfq" type="object" string="Create / Open Vendor RFQ" invisible="state != 'approved'" groups="purchase.group_purchase_user" />
+                    <button name="action_cancel" type="object" string="Cancel Request" invisible="state == 'cancelled'" groups="garage_suite_pro.group_garage_purchase_approver" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Parts Purchase Requests</h1>
+                    </div>
+                    <group>
+                        <group string="Requirement">
+                            <field name="name" />
+                            <field name="requester_id" />
+                            <field name="company_id" readonly="state != 'draft'" />
+                            <field name="job_id" readonly="state != 'draft'" />
+                            <field name="product_id" readonly="state != 'draft'" />
+                            <field name="quantity" readonly="state != 'draft'" />
+                            <field name="needed_by" readonly="state != 'draft'" />
+                            <field name="reason" readonly="state != 'draft'" />
+                        </group>
+                        <group string="Purchase approval">
+                            <field name="vendor_id" />
+                            <field name="approved_by" />
+                            <field name="approved_at" />
+                            <field name="cancellation_reason" />
+                            <field name="order_ids" groups="purchase.group_purchase_user" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_requests" model="ir.actions.act_window">
+        <field name="name">Parts Purchase Requests</field>
+        <field name="res_model">garage.purchase.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="capacity_form" model="ir.ui.view">
+        <field name="name">garage.capacity.report.capacity_form</field>
+        <field name="model">garage.capacity.report</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Employee Capacity">
+                <header>
+                    <button name="action_calculate" type="object" string="Calculate" invisible="False" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Employee Capacity</h1>
+                    </div>
+                    <group>
+                        <group string="Report period">
+                            <field name="company_id" />
+                            <field name="employee_id" />
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                        <group string="Capacity and productive time">
+                            <field name="available_hours" invisible="not calculated" />
+                            <field name="assigned_hours" invisible="not calculated" />
+                            <field name="actual_hours" invisible="not calculated" />
+                            <field name="completed_tasks" invisible="not calculated" />
+                            <field name="productivity" string="Actual / Available (%)" invisible="not calculated or not has_working_hours" />
+                            <field name="has_working_hours" invisible="True" />
+                            <field name="calculated" invisible="True" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_capacity" model="ir.actions.act_window">
+        <field name="name">Employee Capacity</field>
+        <field name="res_model">garage.capacity.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="garage_mailing_form" model="ir.ui.view">
+        <field name="name">mailing.garage.consent</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='mailing_model_id']" position="before">
+                <field name="garage_campaign_company_id" readonly="id and garage_campaign_company_id" />
+            </xpath>
+        </field>
+    </record>
+    <record id="action_campaigns" model="ir.actions.act_window">
+        <field name="name">Consent-Checked Garage Campaigns</field>
+        <field name="res_model">mailing.mailing</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('garage_campaign_company_id', '!=', False)]</field>
+        <field name="context" eval="{'default_mailing_model_id': ref('base.model_res_partner'), 'default_mailing_type': 'mail'}" />
+    </record>
+</odoo>

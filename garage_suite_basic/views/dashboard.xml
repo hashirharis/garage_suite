@@ -1,0 +1,12 @@
+<odoo>
+    <record id="action_dashboard" model="ir.actions.client">
+        <field name="name">Workshop Overview</field>
+        <field name="tag">garage_suite_basic.dashboard</field>
+        <field name="path">garage-overview</field>
+    </record>
+    <menuitem id="menu_dashboard" name="Overview" parent="garage_core.menu_garage_root" action="action_dashboard" sequence="1" groups="garage_core.group_garage_staff" />
+    <record id="garage_core.menu_garage_root" model="ir.ui.menu">
+        <field name="action" ref="action_dashboard" />
+        <field name="web_icon">suite_theme,static/description/icon.png</field>
+    </record>
+</odoo>

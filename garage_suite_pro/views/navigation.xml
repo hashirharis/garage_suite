@@ -1,0 +1,91 @@
+<odoo>
+    <record id="action_dashboard" model="ir.actions.client">
+        <field name="name">Garage Suite Pro Overview</field>
+        <field name="tag">garage_suite_pro.dashboard</field>
+        <field name="path">garage-pro-overview</field>
+    </record>
+    <menuitem id="menu_overview" name="Workshop Overview" sequence="1" parent="garage_core.menu_garage_root" action="action_dashboard" groups="garage_core.group_garage_staff" />
+    <menuitem id="menu_front" name="Front Desk" sequence="10" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_customers" name="Customers" sequence="10" parent="menu_front" action="garage_core.action_customers" />
+    <menuitem id="menu_vehicles" name="Vehicles" sequence="10" parent="menu_front" action="garage_core.action_vehicles" />
+    <menuitem id="menu_enquiries" name="Service Enquiries" sequence="10" parent="menu_front" action="garage_crm.crm_action" groups="garage_core.group_garage_user" />
+    <menuitem id="menu_appointments" name="Appointments" sequence="10" parent="menu_front" action="garage_workshop.appointments_calendar_action" />
+    <menuitem id="menu_followups" name="Follow-ups" sequence="10" parent="menu_front" action="garage_workshop.garage_service_reminder_action" />
+    <menuitem id="menu_workshop" name="Workshop" sequence="20" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_jobs" name="Job Cards" sequence="10" parent="menu_workshop" action="garage_core.action_jobs" />
+    <menuitem id="menu_tasks" name="Workshop Schedule" sequence="10" parent="menu_workshop" action="action_tasks" groups="group_garage_planner,group_garage_executive,garage_core.group_garage_technician" />
+    <menuitem id="menu_estimates" name="Service Estimates" sequence="10" parent="menu_workshop" action="garage_workshop.estimate_action" groups="garage_core.group_garage_user,garage_core.group_garage_cashier,garage_core.group_garage_owner" />
+    <menuitem id="menu_qc" name="Quality Check Queue" sequence="10" parent="menu_workshop" action="garage_suite_basic.quality_queue_action" groups="garage_core.group_garage_quality" />
+    <menuitem id="menu_times" name="Technician Time" sequence="10" parent="menu_workshop" action="garage_workshop.garage_job_time_entry_action" />
+    <menuitem id="menu_parts" name="Parts &amp; Inventory" sequence="30" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_catalogue" name="Parts Catalogue" sequence="10" parent="menu_parts" action="action_parts" groups="garage_core.group_garage_staff" />
+    <menuitem id="menu_fitments" name="Vehicle Compatibility" sequence="10" parent="menu_parts" action="action_fitments" groups="garage_core.group_garage_staff" />
+    <menuitem id="menu_reservations" name="Workshop Reservations" sequence="10" parent="menu_parts" action="action_reservations" groups="group_garage_inventory" />
+    <menuitem id="menu_movements" name="Parts Movements" sequence="10" parent="menu_parts" action="garage_workshop.garage_part_movement_action" />
+    <menuitem id="menu_warehouse_dashboard" name="Warehouse Operations" sequence="10" parent="menu_parts" action="stock.stock_picking_type_action" groups="stock.group_stock_user" />
+    <menuitem id="menu_warehouses" name="Warehouses" sequence="10" parent="menu_parts" action="stock.action_warehouse_form" groups="stock.group_stock_manager" />
+    <menuitem id="menu_stock_locations" name="Locations" sequence="10" parent="menu_parts" action="stock.action_location_form" groups="stock.group_stock_manager" />
+    <menuitem id="menu_transfers" name="Transfers and Returns" sequence="10" parent="menu_parts" action="stock.action_picking_tree_all" groups="stock.group_stock_user" />
+    <menuitem id="menu_landed" name="Landed Costs" sequence="10" parent="menu_parts" action="stock_landed_costs.action_stock_landed_cost" groups="stock.group_stock_manager" />
+    <menuitem id="menu_purchase" name="Purchasing" sequence="40" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_requests" name="Purchase Requests" sequence="10" parent="menu_purchase" action="action_requests" groups="group_garage_inventory,group_garage_buyer" />
+    <menuitem id="menu_rfqs" name="Requests for Quotation" sequence="10" parent="menu_purchase" action="purchase.purchase_rfq" groups="purchase.group_purchase_user" />
+    <menuitem id="menu_orders" name="Purchase Orders" sequence="10" parent="menu_purchase" action="purchase.purchase_form_action" groups="purchase.group_purchase_user" />
+    <menuitem id="menu_sales" name="Sales &amp; POS" sequence="50" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_counter" name="Retail and Wholesale Sales" sequence="10" parent="menu_sales" action="action_counter_sales" groups="sales_team.group_sale_salesman" />
+    <menuitem id="menu_pos" name="Point of Sale" sequence="10" parent="menu_sales" action="point_of_sale.action_pos_config_kanban" groups="point_of_sale.group_pos_user" />
+    <menuitem id="menu_loyalty" name="Discount and Loyalty Programs" sequence="10" parent="menu_sales" action="loyalty.loyalty_program_discount_loyalty_action" groups="sales_team.group_sale_manager,point_of_sale.group_pos_manager" />
+    <menuitem id="menu_accounts" name="Accounting" sequence="60" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_journals" name="Accounting Journals" sequence="10" parent="menu_accounts" action="account.open_account_journal_dashboard_kanban" groups="account.group_account_invoice" />
+    <menuitem id="menu_invoices" name="Workshop Invoices and Credits" sequence="10" parent="menu_accounts" action="garage_service_billing.invoice_action" groups="garage_core.group_garage_cashier" />
+    <menuitem id="menu_payments" name="Workshop Payments" sequence="10" parent="menu_accounts" action="garage_service_billing.payments_action" groups="garage_core.group_garage_cashier" />
+    <menuitem id="menu_account_entries" name="Journal Items" sequence="10" parent="menu_accounts" action="account.action_account_moves_all_a" groups="account.group_account_readonly" />
+    <menuitem id="menu_coverage" name="Insurance &amp; Contracts" sequence="65" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_claims" name="Insurance Claims" sequence="10" parent="menu_coverage" action="action_claims" groups="group_garage_coverage,group_garage_executive" />
+    <menuitem id="menu_contracts" name="Warranty, AMC and Fleet" sequence="10" parent="menu_coverage" action="action_contracts" groups="group_garage_coverage,group_garage_executive" />
+    <menuitem id="menu_entitlements" name="Contract Entitlements" sequence="10" parent="menu_coverage" action="action_entitlements" groups="group_garage_coverage,group_garage_executive" />
+    <menuitem id="menu_people" name="People &amp; Equipment" sequence="70" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_employees" name="Employees" sequence="10" parent="menu_people" action="hr.open_view_employee_list" groups="hr.group_hr_user" />
+    <menuitem id="menu_attendance" name="Attendance" sequence="10" parent="menu_people" action="hr_attendance.hr_attendance_action" groups="hr_attendance.group_hr_attendance_manager" />
+    <menuitem id="menu_timeoff" name="My Time Off" sequence="10" parent="menu_people" action="hr_holidays.hr_leave_action_my_request" groups="base.group_user" />
+    <menuitem id="menu_expenses" name="My Expenses" sequence="10" parent="menu_people" action="hr_expense.hr_expense_actions_my_all" groups="base.group_user" />
+    <menuitem id="menu_resources" name="Workshop Equipment" sequence="10" parent="menu_people" action="maintenance.hr_equipment_action" groups="maintenance.group_equipment_manager" />
+    <menuitem id="menu_analytics" name="Analytics" sequence="80" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_profit" name="Executive Workshop Profitability" sequence="1" parent="menu_analytics" action="action_profit" groups="group_garage_executive" />
+    <menuitem id="menu_utilization" name="Employee Capacity" sequence="10" parent="menu_analytics" action="action_capacity" groups="group_garage_planner,group_garage_executive" />
+    <menuitem id="menu_variance" name="Workshop Schedule Variance" sequence="10" parent="menu_analytics" action="action_productivity" groups="group_garage_planner,group_garage_executive" />
+    <menuitem id="menu_contract_profit" name="Contract Contribution" sequence="10" parent="menu_analytics" action="action_contract_profit" groups="group_garage_executive" />
+    <menuitem id="menu_claim_balances" name="Insurance Claim Exposure" sequence="10" parent="menu_analytics" action="action_claim_balances" groups="group_garage_executive" />
+    <menuitem id="menu_sales_analysis" name="Trading Sales Analysis" sequence="10" parent="menu_analytics" action="sale.action_order_report_all" groups="sales_team.group_sale_manager" />
+    <menuitem id="menu_pos_analysis" name="POS Sales Analysis" sequence="10" parent="menu_analytics" action="point_of_sale.action_report_pos_order_all" groups="point_of_sale.group_pos_manager" />
+    <menuitem id="menu_config" name="Administration" sequence="90" parent="garage_core.menu_garage_root" />
+    <menuitem id="menu_branches" name="Companies and Branches" sequence="10" parent="menu_config" action="action_branches" groups="base.group_system" />
+    <menuitem id="menu_engagement" name="Customer Engagement" parent="garage_core.menu_garage_root" sequence="75" />
+    <menuitem id="menu_campaigns" name="Consent-Checked Campaigns" parent="menu_engagement" action="action_campaigns" groups="mass_mailing.group_mass_mailing_user" />
+    <menuitem id="menu_technician_contribution" name="Technician Labour Contribution" parent="menu_analytics"
+              action="action_technician_contribution" groups="group_garage_executive" />
+    <menuitem id="menu_transport" name="Pickup and Delivery" parent="menu_front" action="action_transport"
+              groups="group_garage_planner" />
+    <menuitem id="menu_stock_levels" name="Stock Levels" parent="menu_parts" action="stock.action_view_quants"
+              groups="stock.group_stock_user" />
+    <menuitem id="menu_stock_counts" name="Physical Counts" parent="menu_parts" action="stock.action_view_inventory_tree"
+              groups="stock.group_stock_user" />
+    <menuitem id="menu_replenish" name="Reordering and Replenishment" parent="menu_parts" action="stock.action_orderpoint_replenish"
+              groups="stock.group_stock_user" />
+    <menuitem id="menu_valuation" name="Inventory Valuation Movements" parent="menu_analytics" action="stock_account.stock_move_valuation_action"
+              groups="stock.group_stock_manager" />
+    <menuitem id="menu_vendor_bills" name="Vendor Bills" parent="menu_accounts" action="account.action_move_in_invoice_type"
+              groups="account.group_account_invoice" />
+    <menuitem id="menu_suppliers" name="Suppliers" parent="menu_purchase" action="account.res_partner_action_supplier"
+              groups="purchase.group_purchase_user" />
+    <menuitem id="menu_sell_pricelists" name="Retail and Wholesale Pricelists" parent="menu_sales" action="product.product_pricelist_action2"
+              groups="sales_team.group_sale_manager" />
+    <menuitem id="menu_appointment_register" name="Appointment Register" parent="menu_front"
+              action="garage_workshop.garage_appointment_action" sequence="12" />
+    <menuitem id="menu_assignments" name="My Assigned Jobs" parent="menu_workshop" action="garage_suite_basic.my_assignments_action"
+              groups="garage_core.group_garage_technician" sequence="15" />
+    <menuitem id="menu_inspections" name="Inspections" parent="menu_workshop" action="garage_workshop.garage_inspection_action"
+              sequence="22" />
+    <menuitem id="menu_ready" name="Ready for Delivery" parent="menu_workshop" action="garage_suite_basic.ready_queue_action"
+              groups="garage_core.group_garage_staff" sequence="25" />
+</odoo>

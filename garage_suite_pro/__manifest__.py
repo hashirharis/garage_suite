@@ -1,0 +1,36 @@
+{
+    'name': 'Garage Suite Pro',
+    'version': '19.0.1.2.0',
+    'category': 'Services/Garage',
+    'summary': 'Workshop planning, automotive parts, procurement and business analytics',
+    'author': 'Garage Suite',
+    'license': 'LGPL-3',
+    'depends': [
+        'garage_suite_basic', 'sale_stock', 'sale_margin', 'purchase_stock',
+        'stock_account', 'stock_landed_costs', 'point_of_sale', 'sale_loyalty',
+        'pos_loyalty', 'hr_attendance', 'hr_holidays', 'hr_expense', 'maintenance',
+        'fleet', 'mass_mailing',
+    ],
+    'data': [
+        'security/roles.xml',
+        'security/ir.model.access.csv',
+        'security/rules.xml',
+        'data/sequences.xml',
+        'views/planning.xml',
+        'views/parts.xml',
+        'views/coverage.xml',
+        'views/analytics.xml',
+        'views/operations.xml',
+        'views/logistics.xml',
+        'views/navigation.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'garage_suite_pro/static/src/dashboard/dashboard.js',
+            'garage_suite_pro/static/src/dashboard/dashboard.xml',
+            'garage_suite_pro/static/src/dashboard/dashboard.scss',
+        ],
+    },
+    'application': True,
+    'installable': True,
+}

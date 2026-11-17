@@ -1,0 +1,131 @@
+<templates xml:space="preserve">
+    <t t-name="garage_suite_basic.Dashboard">
+        <div class="gs-dashboard" t-att-aria-busy="state.loading">
+            <div class="gs-dashboard-content">
+            <header class="gs-hero">
+                <div>
+                    <span t-if="state.payload" class="gs-company"><i class="fa fa-building-o" aria-hidden="true"/> <t t-out="state.payload.company"/></span>
+                    <h1 t-if="workspace" t-out="workspace.role"/>
+                    <h1 t-else="">Workshop overview</h1>
+                </div>
+                <div class="gs-hero-actions">
+                    <button t-if="state.canCreate" class="btn gs-create" t-on-click="createJob">
+                        <i class="fa fa-plus me-2" aria-hidden="true"/>New job card
+                    </button>
+                    <button class="btn gs-export" t-on-click="exportReports">
+                        <i class="fa fa-download me-2" aria-hidden="true"/>Export reports
+                    </button>
+                </div>
+            </header>
+
+            <div class="gs-toolbar">
+                <nav t-if="state.payload" aria-label="Garage workspaces" class="gs-tabs">
+                    <button t-foreach="state.payload.workspaces" t-as="entry" t-key="entry.key"
+                            type="button" t-att-aria-pressed="entry.key === state.workspace"
+                            t-on-click="() => this.state.workspace = entry.key">
+                        <t t-out="entry.label"/>
+                    </button>
+                </nav>
+                <div class="gs-filters">
+                    <label for="gs-period">Period</label>
+                    <select id="gs-period" class="form-select" t-on-change="changePeriod" t-att-value="state.period">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="all">All time</option>
+                    </select>
+                    <button class="btn btn-outline-secondary" t-on-click="load" t-att-disabled="state.loading" aria-label="Refresh dashboard">
+                        <i class="fa fa-refresh" aria-hidden="true"/>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.error" class="alert alert-danger" role="alert">
+                <t t-out="state.error"/>
+                <button class="btn btn-link" t-on-click="load">Try again</button>
+            </div>
+            <p t-if="state.loading and !state.payload" role="status">Loading workshop overview…</p>
+            <t t-if="state.payload and workspace">
+                <div class="gs-section-heading">
+                    <h2>Work queues</h2>
+                    <span t-out="workspace.label"/>
+                </div>
+                <section class="gs-kpis" aria-label="Work queues">
+                    <button t-att-class="'gs-kpi gs-tone-' + card.tone" t-foreach="workspace.cards" t-as="card" t-key="card.key"
+                            t-on-click="() => this.open(card.model, card.domain, card.label)">
+                        <span class="gs-kpi-top">
+                            <i t-att-class="'fa ' + card.icon" aria-hidden="true"/>
+                            <i class="fa fa-arrow-right gs-kpi-arrow" aria-hidden="true"/>
+                        </span>
+                        <strong t-out="card.count.toLocaleString()"/>
+                        <span class="gs-kpi-label" t-out="card.label"/>
+                        <span class="gs-kpi-bottom" t-out="card.description"/>
+                    </button>
+                </section>
+
+                <section t-if="['billing', 'management'].includes(workspace.key) and state.payload.finance.length"
+                         class="gs-kpis gs-finance" aria-label="Financial summary">
+                    <button class="gs-kpi" t-foreach="state.payload.finance" t-as="metric" t-key="metric.key"
+                            t-on-click="() => this.open(metric.model, metric.domain, metric.label)">
+                        <span class="gs-kpi-top"><i class="fa fa-credit-card" aria-hidden="true"/><i class="fa fa-arrow-right gs-kpi-arrow" aria-hidden="true"/></span>
+                        <strong t-out="metric.value.toLocaleString(undefined, {minimumFractionDigits: metric.digits, maximumFractionDigits: metric.digits})"/>
+                        <span class="gs-kpi-label" t-out="metric.label"/>
+                        <span class="gs-kpi-bottom"><t t-out="metric.currency"/> · <t t-out="metric.description"/></span>
+                    </button>
+                </section>
+
+                <div class="gs-middle">
+                    <section class="gs-panel gs-pipeline">
+                        <div class="gs-panel-heading">
+                            <div><h2>Visit pipeline</h2><p>Selected period</p></div>
+                            <span class="gs-total"><t t-out="state.payload.total"/> visits</span>
+                        </div>
+                        <button class="gs-stage" t-foreach="state.payload.pipeline" t-as="stage" t-key="stage.key"
+                                t-on-click="() => this.open('garage.job.card', stage.domain, stage.label)">
+                            <span class="gs-stage-label"><span t-out="stage.label"/><strong t-out="stage.count"/></span>
+                            <span class="gs-track" aria-hidden="true">
+                                <span t-att-class="'gs-fill gs-state-' + stage.key" t-att-style="'width:' + barWidth(stage.count)"/>
+                            </span>
+                        </button>
+                    </section>
+
+                    <section class="gs-panel">
+                        <div class="gs-panel-heading"><div><h2>Vehicles received</h2><p>Last seven calendar days</p></div></div>
+                        <div class="gs-trend">
+                            <button t-foreach="state.payload.trend" t-as="day" t-key="day.date"
+                                    t-on-click="() => this.open('garage.job.card', day.domain, day.date)">
+                                <strong t-out="day.count"/>
+                                <span class="gs-trend-track" aria-hidden="true">
+                                    <span t-att-style="'height:' + trendHeight(day.count)"/>
+                                </span>
+                                <span t-out="shortDate(day.date)"/>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="gs-panel gs-recent">
+                    <div class="gs-panel-heading">
+                        <div><h2>Recent job cards</h2><p>Selected period</p></div>
+                        <button class="btn btn-link" t-on-click="() => this.open('garage.job.card', state.payload.visit_domain, 'Job Cards')">View all</button>
+                    </div>
+                    <p t-if="!state.payload.recent.length" class="gs-empty">No visits match this period.</p>
+                    <div t-else="" class="gs-table-wrap">
+                        <table class="table">
+                            <thead><tr><th>Job card</th><th>Customer</th><th>Vehicle</th><th>Advisor</th><th>Expected delivery</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr t-foreach="state.payload.recent" t-as="job" t-key="job.id">
+                                    <td><button class="gs-record-link" t-on-click="() => this.openJob(job.id)" t-out="job.name"/></td>
+                                    <td t-out="job.customer"/><td t-out="job.vehicle"/><td t-out="job.advisor"/>
+                                    <td t-out="date(job.expected_delivery)"/>
+                                    <td><span t-att-class="'gs-badge gs-badge-' + job.state_key" t-out="job.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </t>
+            </div>
+        </div>
+    </t>
+</templates>

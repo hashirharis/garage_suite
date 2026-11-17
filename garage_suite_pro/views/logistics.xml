@@ -1,0 +1,72 @@
+<odoo>
+    <record id="transport_list" model="ir.ui.view">
+        <field name="name">garage.vehicle.transport.transport_list</field>
+        <field name="model">garage.vehicle.transport</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Pickup and Delivery">
+                <field name="name" />
+                <field name="kind" />
+                <field name="job_id" />
+                <field name="driver_id" />
+                <field name="scheduled_at" />
+                <field name="state" widget="badge" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="transport_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.transport.transport_form</field>
+        <field name="model">garage.vehicle.transport</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Vehicle Pickup and Delivery">
+                <header>
+                    <button name="action_dispatch" type="object" string="Dispatch" invisible="state != 'scheduled'" />
+                    <button name="action_complete" type="object" string="Record Custody Transfer" invisible="state != 'transit'" />
+                    <button name="action_cancel" type="object" string="Cancel Trip" invisible="state != 'scheduled'" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Vehicle Pickup and Delivery</h1>
+                    </div>
+                    <group>
+                        <group string="Trip">
+                            <field name="name" />
+                            <field name="job_id" readonly="id" />
+                            <field name="company_id" />
+                            <field name="driver_id" readonly="state != 'scheduled'" />
+                            <field name="kind" readonly="state != 'scheduled'" />
+                            <field name="scheduled_at" readonly="state != 'scheduled'" />
+                            <field name="address" readonly="state != 'scheduled'" />
+                        </group>
+                        <group string="Custody and evidence">
+                            <field name="recipient" />
+                            <field name="evidence" />
+                            <field name="completed_at" />
+                            <field name="completed_by" />
+                            <field name="cancellation_reason" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_transport" model="ir.actions.act_window">
+        <field name="name">Vehicle Pickup and Delivery</field>
+        <field name="res_model">garage.vehicle.transport</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="job_garage_equipment" model="ir.ui.view">
+        <field name="name">garage.job.card.job_garage_equipment</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='technician_ids'][not(ancestor::notebook)]" position="after">
+                    <field name="garage_equipment_ids" widget="many2many_tags" groups="garage_suite_pro.group_garage_planner" readonly="state in ['closed', 'cancelled', 'delivered']" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

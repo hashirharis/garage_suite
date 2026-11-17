@@ -1,0 +1,96 @@
+<odoo>
+    <record id="garage_appointment_company" model="ir.rule">
+        <field name="name">garage.appointment companies</field>
+        <field name="model_id" ref="model_garage_appointment" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_inspection_template_company" model="ir.rule">
+        <field name="name">garage.inspection.template companies</field>
+        <field name="model_id" ref="model_garage_inspection_template" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_inspection_template_line_company" model="ir.rule">
+        <field name="name">garage.inspection.template.line companies</field>
+        <field name="model_id" ref="model_garage_inspection_template_line" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_inspection_company" model="ir.rule">
+        <field name="name">garage.inspection companies</field>
+        <field name="model_id" ref="model_garage_inspection" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_inspection_line_company" model="ir.rule">
+        <field name="name">garage.inspection.line companies</field>
+        <field name="model_id" ref="model_garage_inspection_line" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_job_time_entry_company" model="ir.rule">
+        <field name="name">garage.job.time.entry companies</field>
+        <field name="model_id" ref="model_garage_job_time_entry" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_part_movement_company" model="ir.rule">
+        <field name="name">garage.part.movement companies</field>
+        <field name="model_id" ref="model_garage_part_movement" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_reminder_company" model="ir.rule">
+        <field name="name">garage.service.reminder companies</field>
+        <field name="model_id" ref="model_garage_service_reminder" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="sale_order_garage_read" model="ir.rule">
+        <field name="name">Garage estimates</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="groups" eval="[(6, 0, [ref('garage_core.group_garage_user'),ref('garage_core.group_garage_cashier'),ref('garage_core.group_garage_owner')])]" />
+        <field name="domain_force">[('garage_job_id', '!=', False)]</field>
+        <field name="perm_write" eval="False" />
+        <field name="perm_create" eval="False" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+    <record id="sale_order_line_garage_read" model="ir.rule">
+        <field name="name">Garage estimates</field>
+        <field name="model_id" ref="sale.model_sale_order_line" />
+        <field name="groups" eval="[(6, 0, [ref('garage_core.group_garage_user'),ref('garage_core.group_garage_cashier'),ref('garage_core.group_garage_owner')])]" />
+        <field name="domain_force">[('order_id.garage_job_id', '!=', False)]</field>
+        <field name="perm_write" eval="False" />
+        <field name="perm_create" eval="False" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+    <record id="garage_job_card_technician" model="ir.rule">
+        <field name="name">Assigned technician work</field>
+        <field name="model_id" ref="garage_core.model_garage_job_card" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_technician'))]" />
+        <field name="domain_force">[('technician_ids', 'in', [user.id])]</field>
+    </record>
+    <record id="garage_job_card_office" model="ir.rule">
+        <field name="name">Garage office scope</field>
+        <field name="model_id" ref="garage_core.model_garage_job_card" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_user')),(4, ref('garage_core.group_garage_manager'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="garage_job_card_line_technician" model="ir.rule">
+        <field name="name">Assigned technician work</field>
+        <field name="model_id" ref="garage_core.model_garage_job_card_line" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_technician'))]" />
+        <field name="domain_force">[('job_id.technician_ids', 'in', [user.id])]</field>
+    </record>
+    <record id="garage_job_card_line_office" model="ir.rule">
+        <field name="name">Garage office scope</field>
+        <field name="model_id" ref="garage_core.model_garage_job_card_line" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_user')),(4, ref('garage_core.group_garage_manager'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="garage_job_complaint_technician" model="ir.rule">
+        <field name="name">Assigned technician work</field>
+        <field name="model_id" ref="garage_core.model_garage_job_complaint" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_technician'))]" />
+        <field name="domain_force">[('job_id.technician_ids', 'in', [user.id])]</field>
+    </record>
+    <record id="garage_job_complaint_office" model="ir.rule">
+        <field name="name">Garage office scope</field>
+        <field name="model_id" ref="garage_core.model_garage_job_complaint" />
+        <field name="groups" eval="[(4, ref('garage_core.group_garage_user')),(4, ref('garage_core.group_garage_manager'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

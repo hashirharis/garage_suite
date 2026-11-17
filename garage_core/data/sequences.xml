@@ -1,0 +1,16 @@
+<odoo noupdate="1">
+    <record id="seq_vehicle" model="ir.sequence">
+        <field name="name">Garage Vehicle</field>
+        <field name="code">garage.vehicle</field>
+        <field name="prefix">VEH/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False" />
+    </record>
+    <record id="seq_job_card" model="ir.sequence">
+        <field name="name">Garage Job Card</field>
+        <field name="code">garage.job.card</field>
+        <field name="prefix">JC/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False" />
+    </record>
+</odoo>

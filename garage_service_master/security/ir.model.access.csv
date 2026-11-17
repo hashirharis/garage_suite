@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+garage_vehicle_make_read,Vehicle Make,model_garage_vehicle_make,garage_core.group_garage_staff,1,0,0,0
+garage_vehicle_make_manager,Vehicle Make,model_garage_vehicle_make,garage_core.group_garage_manager,1,1,1,0
+garage_vehicle_model_read,Vehicle Model,model_garage_vehicle_model,garage_core.group_garage_staff,1,0,0,0
+garage_vehicle_model_manager,Vehicle Model,model_garage_vehicle_model,garage_core.group_garage_manager,1,1,1,0
+garage_vehicle_variant_read,Vehicle Variant,model_garage_vehicle_variant,garage_core.group_garage_staff,1,0,0,0
+garage_vehicle_variant_manager,Vehicle Variant,model_garage_vehicle_variant,garage_core.group_garage_manager,1,1,1,0
+garage_vehicle_category_read,Vehicle Category,model_garage_vehicle_category,garage_core.group_garage_staff,1,0,0,0
+garage_vehicle_category_manager,Vehicle Category,model_garage_vehicle_category,garage_core.group_garage_manager,1,1,1,0
+garage_service_category_read,Service Category,model_garage_service_category,garage_core.group_garage_staff,1,0,0,0
+garage_service_category_manager,Service Category,model_garage_service_category,garage_core.group_garage_manager,1,1,1,0
+garage_service_type_read,Service Type,model_garage_service_type,garage_core.group_garage_staff,1,0,0,0
+garage_service_type_manager,Service Type,model_garage_service_type,garage_core.group_garage_manager,1,1,1,0
+garage_service_bay_read,Service Bay,model_garage_service_bay,garage_core.group_garage_staff,1,0,0,0
+garage_service_bay_manager,Service Bay,model_garage_service_bay,garage_core.group_garage_manager,1,1,1,0
+garage_technician_skill_read,Technician Skill,model_garage_technician_skill,garage_core.group_garage_staff,1,0,0,0
+garage_technician_skill_manager,Technician Skill,model_garage_technician_skill,garage_core.group_garage_manager,1,1,1,0
+garage_service_operation_read,Service Operation,model_garage_service_operation,garage_core.group_garage_staff,1,0,0,0
+garage_service_operation_manager,Service Operation,model_garage_service_operation,garage_core.group_garage_manager,1,1,1,0
+garage_labour_rate_read,Labour Rate,model_garage_labour_rate,garage_core.group_garage_staff,1,0,0,0
+garage_labour_rate_manager,Labour Rate,model_garage_labour_rate,garage_core.group_garage_manager,1,1,1,0
+garage_service_package_read,Service Package,model_garage_service_package,garage_core.group_garage_staff,1,0,0,0
+garage_service_package_manager,Service Package,model_garage_service_package,garage_core.group_garage_manager,1,1,1,0
+hold_reason_read,Waiting reasons,model_garage_hold_reason,garage_core.group_garage_staff,1,0,0,0
+hold_reason_manager,Waiting reason configuration,model_garage_hold_reason,garage_core.group_garage_manager,1,1,1,0

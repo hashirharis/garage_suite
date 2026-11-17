@@ -1,0 +1,12 @@
+{'name': 'Garage Workshop Operations',
+ 'version': '19.0.1.0.1',
+ 'author': 'Garage Suite',
+ 'license': 'LGPL-3',
+ 'category': 'Services/Garage',
+ 'depends': ['garage_service_master', 'sale_management'],
+ 'data': ['security/roles.xml',
+          'security/ir.model.access.csv',
+          'security/rules.xml',
+          'data/data.xml',
+          'views/workshop.xml'],
+ 'installable': True}

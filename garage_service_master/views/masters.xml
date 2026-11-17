@@ -1,0 +1,507 @@
+<odoo>
+    <menuitem id="configuration" name="Configuration" parent="garage_core.menu_garage_root" sequence="90" groups="garage_core.group_garage_manager" />
+    <menuitem id="vehicle_masters" name="Vehicle Masters" parent="configuration" />
+    <menuitem id="service_masters" name="Service Masters" parent="configuration" />
+    <record id="garage_vehicle_make_list" model="ir.ui.view">
+        <field name="name">garage.vehicle.make.list</field>
+        <field name="model">garage.vehicle.make</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_vehicle_make_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.make.form</field>
+        <field name="model">garage.vehicle.make</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_vehicle_make_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Make</field>
+        <field name="res_model">garage.vehicle.make</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_vehicle_make_menu" name="Vehicle Make" parent="vehicle_masters" action="garage_vehicle_make_action" />
+    <record id="garage_vehicle_model_list" model="ir.ui.view">
+        <field name="name">garage.vehicle.model.list</field>
+        <field name="model">garage.vehicle.model</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_vehicle_model_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.model.form</field>
+        <field name="model">garage.vehicle.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="make_id" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_vehicle_model_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Model</field>
+        <field name="res_model">garage.vehicle.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_vehicle_model_menu" name="Vehicle Model" parent="vehicle_masters" action="garage_vehicle_model_action" />
+    <record id="garage_vehicle_variant_list" model="ir.ui.view">
+        <field name="name">garage.vehicle.variant.list</field>
+        <field name="model">garage.vehicle.variant</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_vehicle_variant_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.variant.form</field>
+        <field name="model">garage.vehicle.variant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="model_id" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_vehicle_variant_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Variant</field>
+        <field name="res_model">garage.vehicle.variant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_vehicle_variant_menu" name="Vehicle Variant" parent="vehicle_masters" action="garage_vehicle_variant_action" />
+    <record id="garage_vehicle_category_list" model="ir.ui.view">
+        <field name="name">garage.vehicle.category.list</field>
+        <field name="model">garage.vehicle.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_vehicle_category_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.category.form</field>
+        <field name="model">garage.vehicle.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_vehicle_category_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Category</field>
+        <field name="res_model">garage.vehicle.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_vehicle_category_menu" name="Vehicle Category" parent="vehicle_masters" action="garage_vehicle_category_action" />
+    <record id="garage_service_category_list" model="ir.ui.view">
+        <field name="name">garage.service.category.list</field>
+        <field name="model">garage.service.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_category_form" model="ir.ui.view">
+        <field name="name">garage.service.category.form</field>
+        <field name="model">garage.service.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_category_action" model="ir.actions.act_window">
+        <field name="name">Service Category</field>
+        <field name="res_model">garage.service.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_category_menu" name="Service Category" parent="service_masters" action="garage_service_category_action" />
+    <record id="garage_service_type_list" model="ir.ui.view">
+        <field name="name">garage.service.type.list</field>
+        <field name="model">garage.service.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_type_form" model="ir.ui.view">
+        <field name="name">garage.service.type.form</field>
+        <field name="model">garage.service.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_type_action" model="ir.actions.act_window">
+        <field name="name">Service Type</field>
+        <field name="res_model">garage.service.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_type_menu" name="Service Type" parent="service_masters" action="garage_service_type_action" />
+    <record id="garage_service_bay_list" model="ir.ui.view">
+        <field name="name">garage.service.bay.list</field>
+        <field name="model">garage.service.bay</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_bay_form" model="ir.ui.view">
+        <field name="name">garage.service.bay.form</field>
+        <field name="model">garage.service.bay</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_bay_action" model="ir.actions.act_window">
+        <field name="name">Service Bay</field>
+        <field name="res_model">garage.service.bay</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_bay_menu" name="Service Bay" parent="service_masters" action="garage_service_bay_action" />
+    <record id="garage_technician_skill_list" model="ir.ui.view">
+        <field name="name">garage.technician.skill.list</field>
+        <field name="model">garage.technician.skill</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_technician_skill_form" model="ir.ui.view">
+        <field name="name">garage.technician.skill.form</field>
+        <field name="model">garage.technician.skill</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_technician_skill_action" model="ir.actions.act_window">
+        <field name="name">Technician Skill</field>
+        <field name="res_model">garage.technician.skill</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_technician_skill_menu" name="Technician Skill" parent="service_masters" action="garage_technician_skill_action" />
+    <record id="garage_service_operation_list" model="ir.ui.view">
+        <field name="name">garage.service.operation.list</field>
+        <field name="model">garage.service.operation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_operation_form" model="ir.ui.view">
+        <field name="name">garage.service.operation.form</field>
+        <field name="model">garage.service.operation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="category_id" />
+                        <field name="product_id" />
+                        <field name="standard_hours" />
+                        <field name="pricing" />
+                        <field name="skill_ids" />
+                        <field name="warranty_days" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_operation_action" model="ir.actions.act_window">
+        <field name="name">Service Operation</field>
+        <field name="res_model">garage.service.operation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_operation_menu" name="Service Operation" parent="service_masters" action="garage_service_operation_action" />
+    <record id="garage_labour_rate_list" model="ir.ui.view">
+        <field name="name">garage.labour.rate.list</field>
+        <field name="model">garage.labour.rate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_labour_rate_form" model="ir.ui.view">
+        <field name="name">garage.labour.rate.form</field>
+        <field name="model">garage.labour.rate</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="operation_id" />
+                        <field name="make_id" />
+                        <field name="model_id" />
+                        <field name="rate" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_labour_rate_action" model="ir.actions.act_window">
+        <field name="name">Labour Rate</field>
+        <field name="res_model">garage.labour.rate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_labour_rate_menu" name="Labour Rate" parent="service_masters" action="garage_labour_rate_action" />
+    <record id="garage_service_package_list" model="ir.ui.view">
+        <field name="name">garage.service.package.list</field>
+        <field name="model">garage.service.package</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" />
+                <field name="active" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_package_form" model="ir.ui.view">
+        <field name="name">garage.service.package.form</field>
+        <field name="model">garage.service.package</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="product_id" />
+                        <field name="operation_ids" />
+                        <field name="description" />
+                        <field name="sequence" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_package_action" model="ir.actions.act_window">
+        <field name="name">Service Package</field>
+        <field name="res_model">garage.service.package</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_package_menu" name="Service Package" parent="service_masters" action="garage_service_package_action" />
+    <record id="vehicle_master_form" model="ir.ui.view">
+        <field name="name">vehicle.structured.masters</field>
+        <field name="model">garage.vehicle</field>
+        <field name="inherit_id" ref="garage_core.vehicle_form" />
+        <field name="arch" type="xml">
+            <field name="make" position="before">
+                <field name="make_id" />
+                <field name="model_id" domain="[('make_id', '=', make_id)]" />
+                <field name="variant_id" domain="[('model_id', '=', model_id)]" />
+                <field name="category_id" />
+            </field>
+        </field>
+    </record>
+    <record id="job_master_form" model="ir.ui.view">
+        <field name="name">job.masters</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <field name="service_type" position="after">
+                <field name="service_type_id" />
+                <field name="bay_id" />
+                <field name="package_id" />
+            </field>
+            <xpath expr="//field[@name='line_ids']/list/field[@name='name']" position="before">
+                <field name="operation_id" />
+                <field name="product_id" />
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/list/field[@name='labour_charge']" position="after">
+                <field name="included_in_package" />
+            </xpath>
+        </field>
+    </record>
+    <record id="user_skills_form" model="ir.ui.view">
+        <field name="name">users.garage.skills</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Workshop" groups="garage_core.group_garage_manager">
+                    <group>
+                        <field name="garage_skill_ids" widget="many2many_tags" />
+                        <field name="garage_hourly_cost" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_garage_form" model="ir.ui.view">
+        <field name="name">product.garage.configuration</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Workshop">
+                    <group>
+                        <field name="garage_part" />
+                        <field name="garage_service_category_id" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_customer_search" model="ir.ui.view">
+        <field name="name">garage.customer.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="phone" />
+                <field name="email" />
+                <field name="vat" />
+                <field name="garage_vehicle_ids" string="Registration / VIN" filter_domain="['|', ('garage_vehicle_ids.registration_number','ilike',self), ('garage_vehicle_ids.vin','ilike',self)]" />
+                <filter name="corporate" string="Corporate Customers" domain="[('is_company','=',True)]" />
+            </search>
+        </field>
+    </record>
+    <record id="garage_core.action_customers" model="ir.actions.act_window">
+        <field name="search_view_id" ref="garage_customer_search" />
+    </record>
+    <record id="hold_reason_form" model="ir.ui.view">
+        <field name="name">garage.hold.reason.form</field>
+        <field name="model">garage.hold.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="category" />
+                        <field name="active" />
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hold_reason_action" model="ir.actions.act_window">
+        <field name="name">Waiting Reasons</field>
+        <field name="res_model">garage.hold.reason</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="hold_reason_menu" name="Waiting Reasons" parent="service_masters" action="hold_reason_action" />
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+    <template id="portal_my_home_garage_visits" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Garage Service Visits</t>
+                <t t-set="text">See the status of your workshop visits</t>
+                <t t-set="url" t-value="'/my/garage-visits'" />
+                <t t-set="config_card" t-value="True" />
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_garage_visits" name="Garage Service Visits">
+        <t t-call="portal.portal_layout">
+            <h2 class="mb-3">Garage Service Visits</h2>
+            <p t-if="not visits" class="alert alert-info">There are no service visits for this account.</p>
+            <t t-else="" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <th scope="col">Job Card</th>
+                        <th scope="col">Vehicle at Reception</th>
+                        <th scope="col">Received</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Expected Delivery</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="visits" t-as="visit">
+                        <th scope="row" t-out="visit['name']" />
+                        <td t-out="visit['registration_at_reception'] or visit['vin_at_reception']" />
+                        <td t-out="visit['date']" />
+                        <td><span class="badge rounded-pill text-bg-light" t-out="visit['status']" /></td>
+                        <td t-if="visit['expected_delivery']" t-out="visit['expected_delivery']" />
+                        <td t-else="">Pending</td>
+                    </tr>
+                </tbody>
+            </t>
+        </t>
+    </template>
+</odoo>

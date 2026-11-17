@@ -1,0 +1,341 @@
+<odoo>
+    <menuitem id="reports_menu" name="Reports" parent="garage_core.menu_garage_root" sequence="80" groups="garage_core.group_garage_staff" />
+    <menuitem id="menu_reports_operations" name="Workshop" parent="reports_menu" sequence="10" />
+    <menuitem id="menu_reports_resources" name="Labour &amp; Parts" parent="reports_menu" sequence="20" />
+    <menuitem id="menu_reports_customers" name="Customers &amp; Vehicles" parent="reports_menu" sequence="30" />
+    <menuitem id="menu_reports_financial" name="Billing &amp; Margin" parent="reports_menu" sequence="40" />
+    <record id="jobs_pivot" model="ir.ui.view">
+        <field name="name">garage.report.jobs.pivot</field>
+        <field name="model">garage.job.card</field>
+        <field name="arch" type="xml">
+            <pivot string="Workshop Performance">
+                <field name="date" type="row" interval="month" />
+                <field name="state" type="row" />
+                <field name="estimated_hours" type="measure" />
+                <field name="actual_hours" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="jobs_graph" model="ir.ui.view">
+        <field name="name">garage.report.jobs.graph</field>
+        <field name="model">garage.job.card</field>
+        <field name="arch" type="xml">
+            <graph string="Workshop Performance" type="bar">
+                <field name="date" />
+                <field name="estimated_hours" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="jobs_action" model="ir.actions.act_window">
+        <field name="name">Workshop Performance</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="jobs_report_menu" name="Workshop Performance" parent="menu_reports_operations" action="jobs_action" groups="garage_core.group_garage_staff" sequence="10" />
+    <record id="appointments_pivot" model="ir.ui.view">
+        <field name="name">garage.report.appointments.pivot</field>
+        <field name="model">garage.appointment</field>
+        <field name="arch" type="xml">
+            <pivot string="Appointments and No-shows">
+                <field name="start" type="row" interval="month" />
+                <field name="state" type="row" />
+            </pivot>
+        </field>
+    </record>
+    <record id="appointments_graph" model="ir.ui.view">
+        <field name="name">garage.report.appointments.graph</field>
+        <field name="model">garage.appointment</field>
+        <field name="arch" type="xml">
+            <graph string="Appointments and No-shows" type="bar">
+                <field name="start" />
+            </graph>
+        </field>
+    </record>
+    <record id="appointments_action" model="ir.actions.act_window">
+        <field name="name">Appointments and No-shows</field>
+        <field name="res_model">garage.appointment</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="appointments_report_menu" name="Appointments and No-shows" parent="menu_reports_operations" action="appointments_action" groups="garage_core.group_garage_staff" sequence="20" />
+    <record id="labour_pivot" model="ir.ui.view">
+        <field name="name">garage.report.labour.pivot</field>
+        <field name="model">garage.job.card.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Planned Labour">
+                <field name="operation_id" type="row" />
+                <field name="company_id" type="row" />
+                <field name="planned_hours" type="measure" />
+                <field name="labour_charge" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="labour_graph" model="ir.ui.view">
+        <field name="name">garage.report.labour.graph</field>
+        <field name="model">garage.job.card.line</field>
+        <field name="arch" type="xml">
+            <graph string="Planned Labour" type="bar">
+                <field name="operation_id" />
+                <field name="planned_hours" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="labour_action" model="ir.actions.act_window">
+        <field name="name">Planned Labour</field>
+        <field name="res_model">garage.job.card.line</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="labour_report_menu" name="Planned Labour" parent="menu_reports_resources" action="labour_action" groups="garage_core.group_garage_staff" sequence="10" />
+    <record id="time_pivot" model="ir.ui.view">
+        <field name="name">garage.report.time.pivot</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="arch" type="xml">
+            <pivot string="Technician Time">
+                <field name="start" type="row" interval="month" />
+                <field name="technician_id" type="row" />
+                <field name="hours" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="time_graph" model="ir.ui.view">
+        <field name="name">garage.report.time.graph</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="arch" type="xml">
+            <graph string="Technician Time" type="bar">
+                <field name="start" />
+                <field name="hours" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="time_action" model="ir.actions.act_window">
+        <field name="name">Technician Time</field>
+        <field name="res_model">garage.job.time.entry</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="time_report_menu" name="Technician Time" parent="menu_reports_resources" action="time_action" groups="garage_core.group_garage_staff" sequence="20" />
+    <record id="parts_pivot" model="ir.ui.view">
+        <field name="name">garage.report.parts.pivot</field>
+        <field name="model">garage.part.movement</field>
+        <field name="arch" type="xml">
+            <pivot string="Parts Issues Consumption and Returns">
+                <field name="recorded_at" type="row" interval="month" />
+                <field name="product_id" type="row" />
+                <field name="quantity" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="parts_graph" model="ir.ui.view">
+        <field name="name">garage.report.parts.graph</field>
+        <field name="model">garage.part.movement</field>
+        <field name="arch" type="xml">
+            <graph string="Parts Issues Consumption and Returns" type="bar">
+                <field name="recorded_at" />
+                <field name="quantity" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="parts_action" model="ir.actions.act_window">
+        <field name="name">Parts Issues Consumption and Returns</field>
+        <field name="res_model">garage.part.movement</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="parts_report_menu" name="Parts Issues Consumption and Returns" parent="menu_reports_resources" action="parts_action" groups="garage_core.group_garage_staff" sequence="30" />
+    <record id="estimates_pivot" model="ir.ui.view">
+        <field name="name">garage.report.estimates.pivot</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Estimate Pipeline">
+                <field name="date_order" type="row" interval="month" />
+                <field name="garage_consent" type="row" />
+                <field name="amount_untaxed" type="measure" />
+                <field name="amount_total" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="estimates_graph" model="ir.ui.view">
+        <field name="name">garage.report.estimates.graph</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <graph string="Estimate Pipeline" type="bar">
+                <field name="date_order" />
+                <field name="amount_untaxed" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="estimates_action" model="ir.actions.act_window">
+        <field name="name">Estimate Pipeline</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[('garage_job_id', '!=', False)]</field>
+    </record>
+    <menuitem id="estimates_report_menu" name="Estimate Pipeline" parent="menu_reports_operations" action="estimates_action" groups="garage_core.group_garage_user,garage_core.group_garage_cashier,garage_core.group_garage_owner" sequence="40" />
+    <record id="followups_pivot" model="ir.ui.view">
+        <field name="name">garage.report.followups.pivot</field>
+        <field name="model">garage.service.reminder</field>
+        <field name="arch" type="xml">
+            <pivot string="Service Follow-ups and Feedback">
+                <field name="due_date" type="row" interval="month" />
+                <field name="kind" type="row" />
+            </pivot>
+        </field>
+    </record>
+    <record id="followups_graph" model="ir.ui.view">
+        <field name="name">garage.report.followups.graph</field>
+        <field name="model">garage.service.reminder</field>
+        <field name="arch" type="xml">
+            <graph string="Service Follow-ups and Feedback" type="bar">
+                <field name="due_date" />
+            </graph>
+        </field>
+    </record>
+    <record id="followups_action" model="ir.actions.act_window">
+        <field name="name">Service Follow-ups and Feedback</field>
+        <field name="res_model">garage.service.reminder</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="followups_report_menu" name="Service Follow-ups and Feedback" parent="menu_reports_customers" action="followups_action" groups="garage_core.group_garage_staff" sequence="40" />
+    <record id="revenue_pivot" model="ir.ui.view">
+        <field name="name">garage.report.revenue.pivot</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <pivot string="Service Revenue and Outstanding">
+                <field name="invoice_date" type="row" interval="month" />
+                <field name="partner_id" type="row" />
+                <field name="amount_total_signed" type="measure" />
+                <field name="amount_residual_signed" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="revenue_graph" model="ir.ui.view">
+        <field name="name">garage.report.revenue.graph</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <graph string="Service Revenue and Outstanding" type="bar">
+                <field name="invoice_date" />
+                <field name="amount_total_signed" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="revenue_action" model="ir.actions.act_window">
+        <field name="name">Service Revenue and Outstanding</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[('garage_job_id', '!=', False), ('state', '=', 'posted'), ('move_type', 'in', ['out_invoice', 'out_refund'])]</field>
+    </record>
+    <menuitem id="revenue_report_menu" name="Service Revenue and Outstanding" parent="menu_reports_financial" action="revenue_action" groups="garage_core.group_garage_cashier,garage_core.group_garage_owner" sequence="10" />
+    <record id="collections_pivot" model="ir.ui.view">
+        <field name="name">garage.report.collections.pivot</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <pivot string="Daily Customer Collections">
+                <field name="date" type="row" interval="month" />
+                <field name="payment_type" type="row" />
+                <field name="amount" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="collections_graph" model="ir.ui.view">
+        <field name="name">garage.report.collections.graph</field>
+        <field name="model">account.payment</field>
+        <field name="arch" type="xml">
+            <graph string="Daily Customer Collections" type="bar">
+                <field name="date" />
+                <field name="amount" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="collections_action" model="ir.actions.act_window">
+        <field name="name">Daily Customer Collections</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="domain">[('partner_type', '=', 'customer'), ('garage_payment', '=', True), ('state', 'in', ['paid', 'in_process'])]</field>
+    </record>
+    <menuitem id="collections_report_menu" name="Daily Customer Collections" parent="menu_reports_financial" action="collections_action" groups="garage_core.group_garage_cashier,garage_core.group_garage_owner" sequence="20" />
+    <record id="customer_history_action" model="ir.actions.act_window">
+        <field name="name">Customer Service History</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="context">{'group_by':'customer_id'}</field>
+    </record>
+    <menuitem id="customer_history_menu" name="Customer Service History" parent="menu_reports_customers" action="customer_history_action" sequence="10" />
+    <record id="vehicle_history_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Service History</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="context">{'group_by':'vehicle_id'}</field>
+    </record>
+    <menuitem id="vehicle_history_menu" name="Vehicle Service History" parent="menu_reports_customers" action="vehicle_history_action" sequence="20" />
+    <record id="margin_pivot" model="ir.ui.view">
+        <field name="name">garage.service.margin.pivot</field>
+        <field name="model">garage.job.card</field>
+        <field name="arch" type="xml">
+            <pivot string="Service Revenue, Cost and Margin">
+                <field name="date" interval="month" type="row" />
+                <field name="service_type_id" type="col" />
+                <field name="service_revenue" type="measure" />
+                <field name="service_cost" type="measure" />
+                <field name="service_margin" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="margin_action" model="ir.actions.act_window">
+        <field name="name">Service Revenue, Cost and Margin</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="view_id" ref="margin_pivot" />
+        <field name="domain">[('state','in',['ready','delivered','closed'])]</field>
+    </record>
+    <menuitem id="margin_menu" name="Service Revenue, Cost and Margin" parent="menu_reports_financial" action="margin_action" groups="garage_core.group_garage_manager,garage_core.group_garage_owner" sequence="50" />
+    <record id="labour_revenue_pivot" model="ir.ui.view">
+        <field name="name">garage.labour.revenue.pivot</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Labour and Parts Revenue">
+                <field name="date" interval="month" type="row" />
+                <field name="garage_line_kind" type="col" />
+                <field name="garage_revenue" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="labour_revenue_action" model="ir.actions.act_window">
+        <field name="name">Labour and Parts Revenue</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="view_id" ref="labour_revenue_pivot" />
+        <field name="domain">[('garage_job_id','!=',False),('move_id.state','=','posted'),('display_type','=','product')]</field>
+    </record>
+    <menuitem id="labour_revenue_menu" name="Labour and Parts Revenue" parent="menu_reports_financial" action="labour_revenue_action" groups="garage_core.group_garage_cashier,garage_core.group_garage_owner" sequence="40" />
+    <record id="pending_delivery_action" model="ir.actions.act_window">
+        <field name="name">Pending Delivery</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="domain">[('state','=','ready')]</field>
+    </record>
+    <menuitem id="pending_delivery_menu" name="Pending Delivery" parent="menu_reports_operations" action="pending_delivery_action" sequence="30" />
+    <record id="service_frequency_action" model="ir.actions.act_window">
+        <field name="name">Completed Customer Service Frequency</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="domain">[('state','=','closed')]</field>
+        <field name="context">{'group_by':'customer_id'}</field>
+    </record>
+    <menuitem id="service_frequency_menu" name="Customer Service Frequency" parent="menu_reports_customers" action="service_frequency_action" sequence="30" />
+    <record id="outstanding_action" model="ir.actions.act_window">
+        <field name="name">Outstanding Service Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="domain">[('garage_job_id','!=',False),('move_type','=','out_invoice'),('state','=','posted'),('amount_residual','&gt;',0)]</field>
+    </record>
+    <menuitem id="outstanding_menu" name="Outstanding Service Invoices" parent="menu_reports_financial" action="outstanding_action" groups="garage_core.group_garage_cashier,garage_core.group_garage_owner" sequence="30" />
+    <record id="inspections_action" model="ir.actions.act_window">
+        <field name="name">Inspection Register</field>
+        <field name="res_model">garage.inspection</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="inspection_register" name="Inspection Register" parent="menu_reports_operations" action="inspections_action" sequence="50" />
+</odoo>

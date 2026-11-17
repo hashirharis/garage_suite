@@ -1,0 +1,816 @@
+<odoo>
+    <record id="garage_appointment_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_appointment_form</field>
+        <field name="model">garage.appointment</field>
+        <field name="inherit_id" ref="garage_workshop.garage_appointment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+                <group>
+                    <group string="Customer and vehicle">
+                        <field name="customer_id" />
+                        <field name="vehicle_id" />
+                        <field name="odometer" />
+                    </group>
+                    <group string="Schedule">
+                        <field name="bay_id" />
+                        <field name="start" required="1" />
+                        <field name="end" required="1" />
+                        <field name="state" />
+                    </group>
+                    <group string="Visit notes">
+                        <field name="complaint" />
+                        <field name="change_reason" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <chatter />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calendar-check-o" aria-hidden="true" />
+                        <div>
+                            <span>Booking status</span>
+                            <field name="state" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-clock-o" aria-hidden="true" />
+                        <div>
+                            <span>Scheduled arrival</span>
+                            <field name="start" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile" invisible="not bay_id">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Service bay</span>
+                            <field name="bay_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_inspection_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_inspection_form</field>
+        <field name="model">garage.inspection</field>
+        <field name="inherit_id" ref="garage_workshop.garage_inspection_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <group>
+                    <group string="Inspection details">
+                        <field name="job_id" />
+                        <field name="template_id" />
+                        <field name="phase" />
+                    </group>
+                    <group string="Sign-off">
+                        <field name="signed_by" />
+                        <field name="signed_at" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <chatter />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-check-square-o" aria-hidden="true" />
+                        <div>
+                            <span>Inspection status</span>
+                            <field name="state" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-tasks" aria-hidden="true" />
+                        <div>
+                            <span>Inspection phase</span>
+                            <field name="phase" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile" invisible="not signed_by">
+                        <i class="fa fa-user" aria-hidden="true" />
+                        <div>
+                            <span>Signed by</span>
+                            <field name="signed_by" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_job_time_entry_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_job_time_entry_form</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="inherit_id" ref="garage_workshop.garage_job_time_entry_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <group>
+                    <group string="Assignment">
+                        <field name="job_id" />
+                        <field name="operation_line_id" domain="[('job_id', '=', job_id)]" />
+                        <field name="technician_id" />
+                    </group>
+                    <group string="Time recorded">
+                        <field name="start" required="1" />
+                        <field name="end" />
+                        <field name="hours" />
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-clock-o" aria-hidden="true" />
+                        <div>
+                            <span>Hours logged</span>
+                            <field name="hours" readonly="1" widget="float_time" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-user" aria-hidden="true" />
+                        <div>
+                            <span>Technician</span>
+                            <field name="technician_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_part_movement_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_part_movement_form</field>
+        <field name="model">garage.part.movement</field>
+        <field name="inherit_id" ref="garage_workshop.garage_part_movement_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <group>
+                    <group string="Part movement">
+                        <field name="job_id" />
+                        <field name="kind" />
+                        <field name="product_id" />
+                        <field name="quantity" />
+                        <field name="uom_id" />
+                    </group>
+                    <group string="Traceability">
+                        <field name="reason" />
+                        <field name="actor_id" />
+                        <field name="recorded_at" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-exchange" aria-hidden="true" />
+                        <div>
+                            <span>Movement type</span>
+                            <field name="kind" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-cubes" aria-hidden="true" />
+                        <div>
+                            <span>Quantity</span>
+                            <field name="quantity" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_reminder_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_reminder_form</field>
+        <field name="model">garage.service.reminder</field>
+        <field name="inherit_id" ref="garage_workshop.garage_service_reminder_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+                <group>
+                    <group string="Customer and vehicle">
+                        <field name="customer_id" />
+                        <field name="vehicle_id" />
+                        <field name="job_id" />
+                    </group>
+                    <group string="Follow-up">
+                        <field name="due_date" required="1" />
+                        <field name="due_odometer" />
+                        <field name="kind" />
+                        <field name="assigned_id" />
+                        <field name="state" />
+                    </group>
+                    <group string="Contact preferences">
+                        <field name="contact_permitted" />
+                        <field name="channel" />
+                    </group>
+                    <group string="Feedback">
+                        <field name="satisfaction" />
+                        <field name="feedback" />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <chatter />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-phone" aria-hidden="true" />
+                        <div>
+                            <span>Follow-up status</span>
+                            <field name="state" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calendar" aria-hidden="true" />
+                        <div>
+                            <span>Due date</span>
+                            <field name="due_date" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile" invisible="not assigned_id">
+                        <i class="fa fa-user" aria-hidden="true" />
+                        <div>
+                            <span>Assigned to</span>
+                            <field name="assigned_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_inspection_template_form" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_inspection_template_form</field>
+        <field name="model">garage.inspection.template</field>
+        <field name="inherit_id" ref="garage_workshop.garage_inspection_template_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="replace">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+                <group>
+                    <group string="Template scope">
+                        <field name="phase" />
+                        <field name="default_for_jobs" />
+                        <field name="company_id" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_job_card_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_job_card_workspace</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//header/button[1]" position="attributes">
+                <attribute name="class" add="btn-primary" separator=" " />
+            </xpath>
+            <xpath expr="//header/field[@name='state' and contains(@widget, 'statusbar')]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Visit status</span>
+                            <field name="state" readonly="1" widget="badge" decoration-success="state in ['ready', 'delivered', 'closed']" decoration-warning="state in ['awaiting_approval', 'on_hold']" decoration-danger="state == 'cancelled'" decoration-info="state in ['authorized', 'in_progress', 'quality_check']" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-clock-o" aria-hidden="true" />
+                        <div>
+                            <span>Planned labour</span>
+                            <field name="estimated_hours" readonly="1" widget="float_time" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-tachometer" aria-hidden="true" />
+                        <div>
+                            <span>Logged labour</span>
+                            <field name="actual_hours" readonly="1" widget="float_time" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile" invisible="not expected_delivery">
+                        <i class="fa fa-calendar" aria-hidden="true" />
+                        <div>
+                            <span>Expected delivery</span>
+                            <field name="expected_delivery" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//sheet/group[1]/group[1]" position="attributes">
+                <attribute name="string">Vehicle and reception</attribute>
+            </xpath>
+            <xpath expr="//sheet/group[1]/group[2]" position="attributes">
+                <attribute name="string">Workshop assignment</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_vehicle_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_vehicle_workspace</field>
+        <field name="model">garage.vehicle</field>
+        <field name="inherit_id" ref="garage_core.vehicle_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/group[1]" position="attributes">
+                <attribute name="string">Registration and ownership</attribute>
+            </xpath>
+            <xpath expr="//sheet/group[1]/group[2]" position="attributes">
+                <attribute name="string">Vehicle specification</attribute>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="gs-form-kpis">
+                    <div class="gs-form-tile" invisible="not registration_number">
+                        <i class="fa fa-car" aria-hidden="true" />
+                        <div>
+                            <span>Registration</span>
+                            <field name="registration_number" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-tachometer" aria-hidden="true" />
+                        <div>
+                            <span>Latest odometer (km)</span>
+                            <field name="odometer" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile" invisible="not insurance_expiry">
+                        <i class="fa fa-calendar" aria-hidden="true" />
+                        <div>
+                            <span>Insurance expires</span>
+                            <field name="insurance_expiry" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_vehicle_make_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_vehicle_make_form_workspace</field>
+        <field name="model">garage.vehicle.make</field>
+        <field name="inherit_id" ref="garage_service_master.garage_vehicle_make_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_vehicle_model_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_vehicle_model_form_workspace</field>
+        <field name="model">garage.vehicle.model</field>
+        <field name="inherit_id" ref="garage_service_master.garage_vehicle_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_vehicle_variant_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_vehicle_variant_form_workspace</field>
+        <field name="model">garage.vehicle.variant</field>
+        <field name="inherit_id" ref="garage_service_master.garage_vehicle_variant_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_vehicle_category_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_vehicle_category_form_workspace</field>
+        <field name="model">garage.vehicle.category</field>
+        <field name="inherit_id" ref="garage_service_master.garage_vehicle_category_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_category_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_category_form_workspace</field>
+        <field name="model">garage.service.category</field>
+        <field name="inherit_id" ref="garage_service_master.garage_service_category_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_type_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_type_form_workspace</field>
+        <field name="model">garage.service.type</field>
+        <field name="inherit_id" ref="garage_service_master.garage_service_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_bay_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_bay_form_workspace</field>
+        <field name="model">garage.service.bay</field>
+        <field name="inherit_id" ref="garage_service_master.garage_service_bay_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_technician_skill_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_technician_skill_form_workspace</field>
+        <field name="model">garage.technician.skill</field>
+        <field name="inherit_id" ref="garage_service_master.garage_technician_skill_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_operation_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_operation_form_workspace</field>
+        <field name="model">garage.service.operation</field>
+        <field name="inherit_id" ref="garage_service_master.garage_service_operation_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_labour_rate_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_labour_rate_form_workspace</field>
+        <field name="model">garage.labour.rate</field>
+        <field name="inherit_id" ref="garage_service_master.garage_labour_rate_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="garage_service_package_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.garage_service_package_form_workspace</field>
+        <field name="model">garage.service.package</field>
+        <field name="inherit_id" ref="garage_service_master.garage_service_package_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="hold_reason_form_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.hold_reason_form_workspace</field>
+        <field name="model">garage.hold.reason</field>
+        <field name="inherit_id" ref="garage_service_master.hold_reason_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="gs-workspace-form" separator=" " />
+            </xpath>
+            <xpath expr="//sheet/group[1]/field[@name=&quot;name&quot;]" position="replace" />
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="estimate_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.estimate_workspace</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="garage_workshop.estimate_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[group/field[@name='garage_job_id']]/group" position="attributes">
+                <attribute name="string">Consent and evidence</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state' and @widget='statusbar']" position="attributes">
+                <attribute name="invisible" add="(garage_job_id)" separator=" or " />
+            </xpath>
+            <xpath expr="//sheet/notebook" position="before">
+                <div class="gs-form-kpis" invisible="not (garage_job_id)">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-check-square-o" aria-hidden="true" />
+                        <div>
+                            <span>Customer consent</span>
+                            <field name="garage_consent" readonly="1" widget="badge" decoration-success="garage_consent == 'approved'" decoration-warning="garage_consent == 'issued'" decoration-danger="garage_consent == 'rejected'" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-files-o" aria-hidden="true" />
+                        <div>
+                            <span>Revision</span>
+                            <field name="garage_version" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calculator" aria-hidden="true" />
+                        <div>
+                            <span>Total</span>
+                            <field name="amount_total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Job card</span>
+                            <field name="garage_job_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="invoice_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.invoice_workspace</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="garage_service_billing.invoice_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[group/field[@name='garage_job_id']]/group" position="attributes">
+                <attribute name="string">Workshop source</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state' and @widget='statusbar']" position="attributes">
+                <attribute name="invisible" add="(garage_job_id)" separator=" or " />
+            </xpath>
+            <xpath expr="//header/field[@name='state' and @widget='account_move_statusbar_secured']" position="attributes">
+                <attribute name="invisible" add="garage_job_id" separator=" or " />
+            </xpath>
+            <xpath expr="//sheet/notebook" position="before">
+                <div class="gs-form-kpis" invisible="not (garage_job_id)">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-file-text-o" aria-hidden="true" />
+                        <div>
+                            <span>Posting status</span>
+                            <field name="state" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-credit-card" aria-hidden="true" />
+                        <div>
+                            <span>Payment status</span>
+                            <field name="payment_state" readonly="1" widget="badge" decoration-success="payment_state == 'paid'" decoration-warning="payment_state in ['partial', 'in_payment']" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calculator" aria-hidden="true" />
+                        <div>
+                            <span>Amount due</span>
+                            <field name="amount_residual" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Job card</span>
+                            <field name="garage_job_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_workspace" model="ir.ui.view">
+        <field name="name">garage.workspace.crm_workspace</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="garage_crm.lead_garage_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[group/field[@name='garage_vehicle_id']]/group" position="attributes">
+                <attribute name="string">Vehicle enquiry</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='stage_id' and contains(@widget, 'statusbar')]" position="attributes">
+                <attribute name="invisible" add="(garage_service_enquiry or garage_vehicle_id or garage_job_ids)" separator=" or " />
+            </xpath>
+            <xpath expr="//sheet/notebook" position="before">
+                <field name="garage_service_enquiry" invisible="1" />
+                <div class="gs-form-kpis" invisible="not (garage_service_enquiry or garage_vehicle_id or garage_job_ids)">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-tasks" aria-hidden="true" />
+                        <div>
+                            <span>Pipeline stage</span>
+                            <field name="stage_id" options="{'no_create': True, 'no_open': True}"
+                                   domain="['|', ('team_ids', 'in', team_id), ('team_ids', '=', False)]"
+                                   readonly="won_status == 'lost' or not active" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-car" aria-hidden="true" />
+                        <div>
+                            <span>Vehicle</span>
+                            <field name="garage_vehicle_id" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Service type</span>
+                            <field name="garage_service_type_id" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="job_workshop_actions" model="ir.ui.view">
+        <field name="name">garage.workspace.job.workflow.actions</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_workshop.job_workshop_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_progress']" position="replace">
+                <button name="action_progress" type="object" string="Start Work" groups="garage_core.group_garage_technician" invisible="state != 'authorized'" class="oe_highlight" />
+                <button name="action_progress" type="object" string="Submit for Quality Check" groups="garage_core.group_garage_technician" invisible="state != 'in_progress'" class="oe_highlight" />
+                <button name="action_progress" type="object" string="Resume Work" groups="garage_core.group_garage_technician" invisible="state != 'on_hold'" class="oe_highlight" />
+                <button name="action_progress" type="object" string="Mark Ready for Delivery" groups="garage_core.group_garage_quality" invisible="state != 'quality_check'" class="oe_highlight" />
+                <button name="action_progress" type="object" string="Record Handover" groups="garage_core.group_garage_user" invisible="state != 'ready'" class="oe_highlight" />
+                <button name="action_progress" type="object" string="Close Job Card" groups="garage_core.group_garage_user" invisible="state != 'delivered'" class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+    <record id="payment_workspace" model="ir.ui.view">
+        <field name="name">account.payment.garage.summary</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state' and contains(@widget, 'statusbar')]" position="attributes">
+                <attribute name="invisible" add="garage_payment" separator=" or " />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <field name="garage_payment" invisible="1" />
+                <div class="gs-form-kpis" invisible="not garage_payment">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-credit-card" aria-hidden="true" />
+                        <div>
+                            <span>Payment status</span>
+                            <field name="state" readonly="1" widget="badge" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calculator" aria-hidden="true" />
+                        <div>
+                            <span>Amount</span>
+                            <field name="amount" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-calendar" aria-hidden="true" />
+                        <div>
+                            <span>Payment date</span>
+                            <field name="date" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="customer_workspace" model="ir.ui.view">
+        <field name="name">res.partner.garage.summary</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="garage_core.view_partner_garage" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="before">
+                <div class="gs-form-kpis" invisible="not is_garage_customer" groups="garage_core.group_garage_staff">
+                    <div class="gs-form-tile">
+                        <i class="fa fa-car" aria-hidden="true" />
+                        <div>
+                            <span>Vehicles</span>
+                            <field name="garage_vehicle_count" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="gs-form-tile">
+                        <i class="fa fa-wrench" aria-hidden="true" />
+                        <div>
+                            <span>Service visits</span>
+                            <field name="garage_visit_count" readonly="1" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

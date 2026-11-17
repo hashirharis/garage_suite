@@ -1,0 +1,112 @@
+.gs-dashboard.gs-pro {
+    --pro-blue: #2459cd;
+    --pro-teal: #12a08a;
+    --pro-hero: #102238;
+    padding: clamp(16px, 2.3vw, 36px);
+
+    .gs-pro-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        padding: clamp(20px, 3vw, 39px);
+        border-radius: 18px;
+        background:
+            radial-gradient(ellipse at 90% 0%, #274f7c 0, transparent 62%),
+            linear-gradient(112deg, var(--pro-hero), #142e46);
+        color: #fff;
+
+        h1 { font-size: clamp(28px, 4.2vw, 48px); margin: 4px 0; line-height: 1.08; }
+    }
+
+    .gs-pro-company { color: #bed7f3; font-weight: 600; font-size: .83rem; }
+    .gs-pro-role { color: #dce9f3; font-size: .9rem; }
+    .gs-pro-actions, .gs-pro-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .gs-pro-toolbar { justify-content: space-between; margin: 20px 0; }
+    .gs-pro-toolbar .gs-tabs button[aria-pressed="true"] { background: var(--pro-hero); }
+    .gs-pro-scorecard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .gs-pro-stat {
+        display: grid;
+        gap: 6px;
+        padding: 16px;
+        border: 1px solid var(--gs-border);
+        border-radius: 12px;
+        background: var(--gs-panel);
+        color: var(--gs-ink);
+        font-weight: 600;
+
+        strong { font-size: clamp(23px, 3vw, 34px); line-height: 1.05; overflow-wrap: anywhere; }
+        small { font-size: .73rem; font-weight: 400; color: var(--gs-muted); }
+        &:hover { border-color: var(--pro-blue); }
+    }
+
+    .gs-pro-stat-emphasis {
+        background: var(--pro-hero);
+        color: #fff;
+        small { color: #c9deed; }
+    }
+
+    .gs-pro-chart-facts {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 20px;
+        padding: 0 24px 10px;
+        color: var(--gs-muted);
+        strong { margin-inline-start: 6px; color: var(--gs-ink); }
+    }
+
+    .gs-pro-key { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-inline-end: 5px; }
+    .gs-pro-revenue { background: var(--pro-blue); }
+    .gs-pro-cost { background: var(--pro-teal); }
+    .gs-pro-chart-scroll { overflow-x: auto; padding: 0 18px 16px; }
+    .gs-pro-columns {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 3px;
+        min-width: 470px;
+        button {
+            display: grid;
+            gap: 8px;
+            text-align: center;
+            color: var(--gs-muted);
+            padding: 6px 2px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            font-size: .75rem;
+            &:hover { background: var(--scm-surface-soft, #eef4fa); }
+        }
+    }
+
+    .gs-pro-bar-pair {
+        position: relative;
+        height: 120px;
+        background: repeating-linear-gradient(to top,
+            var(--gs-border) 0 1px, transparent 1px 25%);
+        > span { position: absolute; width: 34%; border-radius: 4px 4px 0 0; }
+        .gs-pro-revenue { inset-inline-start: 12%; }
+        .gs-pro-cost { inset-inline-end: 12%; }
+    }
+
+    .gs-pro-work { margin: 24px 0; }
+    .gs-pro-pipeline { padding-bottom: 12px; }
+    .gs-pro-detail { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 16px; }
+    @media (max-width: 767px) {
+        .gs-pro-detail { grid-template-columns: 1fr; }
+        .gs-pro-toolbar .gs-tabs { width: 100%; }
+    }
+}

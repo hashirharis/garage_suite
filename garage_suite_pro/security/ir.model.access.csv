@@ -1,0 +1,19 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_task_planner,Workshop task planner,model_garage_workshop_task,garage_suite_pro.group_garage_planner,1,1,1,0
+access_task_tech,Workshop task technician,model_garage_workshop_task,garage_core.group_garage_technician,1,1,0,0
+access_task_executive,Workshop task executive,model_garage_workshop_task,garage_suite_pro.group_garage_executive,1,0,0,0
+access_fitment_read,Fitment read,model_garage_part_fitment,garage_core.group_garage_staff,1,0,0,0
+access_fitment_manage,Fitment manage,model_garage_part_fitment,garage_suite_pro.group_garage_pro_manager,1,1,1,1
+access_reservation_stock,Workshop reservation stock,model_garage_stock_reservation,garage_suite_pro.group_garage_inventory,1,1,1,0
+access_claim_manage,Insurance claim manager,model_garage_insurance_claim,garage_suite_pro.group_garage_coverage,1,1,1,0
+access_claim_executive,Insurance claim executive,model_garage_insurance_claim,garage_suite_pro.group_garage_executive,1,0,0,0
+access_contract_manage,Contract manager,model_garage_service_contract,garage_suite_pro.group_garage_coverage,1,1,1,0
+access_contract_executive,Contract executive,model_garage_service_contract,garage_suite_pro.group_garage_executive,1,0,0,0
+access_entitlement_manage,Entitlement manager,model_garage_contract_entitlement,garage_suite_pro.group_garage_coverage,1,1,1,0
+access_entitlement_executive,Entitlement executive,model_garage_contract_entitlement,garage_suite_pro.group_garage_executive,1,0,0,0
+access_request_buyer,Purchase request buyer,model_garage_purchase_request,garage_suite_pro.group_garage_buyer,1,1,1,0
+access_request_store,Purchase request storekeeper,model_garage_purchase_request,garage_suite_pro.group_garage_inventory,1,1,1,0
+access_capacity_planner,Capacity report planner,model_garage_capacity_report,garage_suite_pro.group_garage_planner,1,1,1,1
+access_capacity_exec,Capacity report executive,model_garage_capacity_report,garage_suite_pro.group_garage_executive,1,1,1,1
+access_technician_contribution,Technician contribution reporting,model_garage_technician_contribution,garage_suite_pro.group_garage_executive,1,0,0,0
+access_vehicle_transport,Pickup and delivery coordination,model_garage_vehicle_transport,garage_suite_pro.group_garage_planner,1,1,1,0

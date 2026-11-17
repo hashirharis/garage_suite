@@ -1,0 +1,71 @@
+<odoo>
+    <record id="rule_workshop_task_company" model="ir.rule">
+        <field name="name">Workshop Task: permitted companies</field>
+        <field name="model_id" ref="model_garage_workshop_task" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_part_fitment_company" model="ir.rule">
+        <field name="name">Part Fitment: permitted companies</field>
+        <field name="model_id" ref="model_garage_part_fitment" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_stock_reservation_company" model="ir.rule">
+        <field name="name">Stock Reservation: permitted companies</field>
+        <field name="model_id" ref="model_garage_stock_reservation" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_insurance_claim_company" model="ir.rule">
+        <field name="name">Insurance Claim: permitted companies</field>
+        <field name="model_id" ref="model_garage_insurance_claim" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_service_contract_company" model="ir.rule">
+        <field name="name">Service Contract: permitted companies</field>
+        <field name="model_id" ref="model_garage_service_contract" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_contract_entitlement_company" model="ir.rule">
+        <field name="name">Contract Entitlement: permitted companies</field>
+        <field name="model_id" ref="model_garage_contract_entitlement" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_purchase_request_company" model="ir.rule">
+        <field name="name">Purchase Request: permitted companies</field>
+        <field name="model_id" ref="model_garage_purchase_request" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_task_assignee" model="ir.rule">
+        <field name="name">Technician tasks assigned to current user</field>
+        <field name="model_id" ref="model_garage_workshop_task" />
+        <field name="groups" eval="[Command.link(ref('garage_core.group_garage_technician'))]" />
+        <field name="domain_force">[('technician_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_task_planner" model="ir.rule">
+        <field name="name">Task scheduling within permitted companies</field>
+        <field name="model_id" ref="model_garage_workshop_task" />
+        <field name="groups" eval="[Command.link(ref('group_garage_planner')), Command.link(ref('group_garage_executive'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="rule_request_store" model="ir.rule">
+        <field name="name">Own storekeeper purchase requests</field>
+        <field name="model_id" ref="model_garage_purchase_request" />
+        <field name="groups" eval="[Command.link(ref('group_garage_inventory'))]" />
+        <field name="domain_force">[('requester_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_request_buyer" model="ir.rule">
+        <field name="name">Buyers see authorized company requests</field>
+        <field name="model_id" ref="model_garage_purchase_request" />
+        <field name="groups" eval="[Command.link(ref('group_garage_buyer'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="rule_technician_contribution_company" model="ir.rule">
+        <field name="name">Technician contribution: permitted companies</field>
+        <field name="model_id" ref="model_garage_technician_contribution" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_vehicle_transport_company" model="ir.rule">
+        <field name="name">Vehicle transport: permitted companies</field>
+        <field name="model_id" ref="model_garage_vehicle_transport" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

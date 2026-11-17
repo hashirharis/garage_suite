@@ -1,0 +1,123 @@
+<odoo>
+    <record id="tasks_list" model="ir.ui.view">
+        <field name="name">garage.workshop.task.tasks_list</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="arch" type="xml">
+            <list string="Workshop Tasks">
+                <field name="name" />
+                <field name="job_id" />
+                <field name="employee_id" />
+                <field name="bay_id" />
+                <field name="planned_start" />
+                <field name="planned_end" />
+                <field name="planned_hours" />
+                <field name="actual_hours" />
+                <field name="state" widget="badge" />
+            </list>
+        </field>
+    </record>
+    <record id="tasks_form" model="ir.ui.view">
+        <field name="name">garage.workshop.task.tasks_form</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Workshop Tasks">
+                <header>
+                    <button name="action_schedule" type="object" string="Schedule" invisible="state != 'draft'" groups="garage_suite_pro.group_garage_planner" />
+                    <button name="action_unschedule" type="object" string="Return to Draft" invisible="state != 'scheduled'" groups="garage_suite_pro.group_garage_planner" />
+                    <button name="action_start" type="object" string="Start Task" invisible="state != 'scheduled'" />
+                    <button name="action_done" type="object" string="Complete Task" invisible="state != 'working'" />
+                    <button name="action_cancel" type="object" string="Cancel Task" invisible="state not in ['draft', 'scheduled']" groups="garage_suite_pro.group_garage_planner" />
+                    <field name="state" widget="badge" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Workshop Tasks</h1>
+                    </div>
+                    <group>
+                        <group string="Work order">
+                            <field name="name" readonly="state != 'draft'" />
+                            <field name="job_id" readonly="id" />
+                            <field name="company_id" />
+                            <field name="operation_line_id" readonly="state != 'draft'" domain="[('job_id', '=', job_id)]" />
+                            <field name="predecessor_ids" readonly="state != 'draft'" widget="many2many_tags" domain="[('job_id', '=', job_id), ('id', '!=', id)]" />
+                            <field name="successor_ids" widget="many2many_tags" />
+                        </group>
+                        <group string="Schedule">
+                            <field name="employee_id" readonly="state != 'draft'" />
+                            <field name="bay_id" readonly="state != 'draft'" />
+                            <field name="planned_start" readonly="state != 'draft'" />
+                            <field name="planned_end" readonly="state != 'draft'" />
+                            <field name="planned_hours" />
+                            <field name="actual_hours" />
+                        </group>
+                        <group string="Progress and evidence">
+                            <field name="work_notes" />
+                            <field name="cancellation_reason" />
+                            <field name="completed_by" />
+                            <field name="completed_at" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_tasks" model="ir.actions.act_window">
+        <field name="name">Workshop Tasks</field>
+        <field name="res_model">garage.workshop.task</field>
+        <field name="view_mode">calendar,list,form,pivot,graph</field>
+    </record>
+    <record id="tasks_calendar" model="ir.ui.view">
+        <field name="name">garage.workshop.task.tasks_calendar</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="arch" type="xml">
+            <calendar string="Workshop Schedule" date_start="planned_start" date_stop="planned_end" color="employee_id" mode="week" quick_create="false" event_open_popup="true">
+                <field name="job_id" />
+                <field name="employee_id" />
+                <field name="bay_id" />
+                <field name="state" />
+            </calendar>
+        </field>
+    </record>
+    <record id="task_search" model="ir.ui.view">
+        <field name="name">garage.workshop.task.task_search</field>
+        <field name="model">garage.workshop.task</field>
+        <field name="arch" type="xml">
+            <search string="Workshop Tasks">
+                <field name="name" />
+                <field name="job_id" />
+                <field name="employee_id" />
+                <field name="bay_id" />
+                <field name="company_id" />
+                <filter name="mine" string="My Tasks" domain="[('technician_id', '=', uid)]" />
+                <filter name="active" string="Scheduled or In Progress" domain="[('state', 'in', ['scheduled', 'working'])]" />
+                <filter name="overdue" string="Overdue" domain="[('state', 'in', ['scheduled', 'working']), ('planned_end', '&lt;', datetime.datetime.now())]" />
+                <filter name="date_plan" string="Scheduled Start" date="planned_start" />
+            </search>
+        </field>
+    </record>
+    <record id="job_pro_tasks" model="ir.ui.view">
+        <field name="name">garage.job.card.job_pro_tasks</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//header" position="inside">
+                    <button name="action_garage_tasks" type="object" string="Workshop Tasks" icon="fa-tasks" groups="garage_suite_pro.group_garage_planner,garage_core.group_garage_technician,garage_suite_pro.group_garage_executive" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="time_task_link" model="ir.ui.view">
+        <field name="name">garage.job.time.entry.time_task_link</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="inherit_id" ref="garage_suite_basic.garage_job_time_entry_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='operation_line_id']" position="after">
+                    <field name="garage_task_id" domain="[('job_id', '=', job_id), ('operation_line_id', '=', operation_line_id), ('state', '=', 'working')]" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

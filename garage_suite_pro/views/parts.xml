@@ -1,0 +1,223 @@
+<odoo>
+    <record id="fitments_list" model="ir.ui.view">
+        <field name="name">garage.part.fitment.fitments_list</field>
+        <field name="model">garage.part.fitment</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Compatibility">
+                <field name="product_tmpl_id" />
+                <field name="make_id" />
+                <field name="model_id" />
+                <field name="variant_id" />
+                <field name="year_from" />
+                <field name="year_to" />
+                <field name="engine_code" />
+                <field name="evidence" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="fitments_form" model="ir.ui.view">
+        <field name="name">garage.part.fitment.fitments_form</field>
+        <field name="model">garage.part.fitment</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Vehicle Compatibility">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Vehicle Compatibility</h1>
+                    </div>
+                    <group>
+                        <group string="Part and vehicle">
+                            <field name="company_id" />
+                            <field name="product_tmpl_id" />
+                            <field name="make_id" />
+                            <field name="model_id" domain="[('make_id', '=', make_id)]" />
+                            <field name="variant_id" domain="[('model_id', '=', model_id)]" />
+                        </group>
+                        <group string="Verified fitment">
+                            <field name="year_from" />
+                            <field name="year_to" />
+                            <field name="engine_code" />
+                            <field name="fuel_type" />
+                            <field name="transmission" />
+                            <field name="evidence" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_fitments" model="ir.actions.act_window">
+        <field name="name">Vehicle Compatibility</field>
+        <field name="res_model">garage.part.fitment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="reservations_list" model="ir.ui.view">
+        <field name="name">garage.stock.reservation.reservations_list</field>
+        <field name="model">garage.stock.reservation</field>
+        <field name="arch" type="xml">
+            <list string="Workshop Reservations">
+                <field name="job_id" />
+                <field name="product_id" />
+                <field name="quantity" />
+                <field name="uom_id" />
+                <field name="state" widget="badge" />
+                <field name="move_id" />
+                <field name="company_id" />
+            </list>
+        </field>
+    </record>
+    <record id="reservations_form" model="ir.ui.view">
+        <field name="name">garage.stock.reservation.reservations_form</field>
+        <field name="model">garage.stock.reservation</field>
+        <field name="arch" type="xml">
+            <form class="gs-workspace-form" string="Workshop Reservations">
+                <header>
+                    <button name="action_reserve" type="object" string="Reserve Stock" invisible="move_id" groups="garage_suite_pro.group_garage_inventory" />
+                <button name="action_check_availability" type="object" string="Check Availability" invisible="state not in ['confirmed', 'partially_available']" groups="garage_suite_pro.group_garage_inventory" />
+                    <button name="action_cancel" type="object" string="Cancel Reservation" invisible="not move_id or state in ['done', 'cancel']" groups="garage_suite_pro.group_garage_inventory" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Workshop Reservations</h1>
+                    </div>
+                    <group>
+                        <group string="Approved requirement">
+                            <field name="job_id" />
+                            <field name="product_id" />
+                            <field name="quantity" />
+                            <field name="uom_id" />
+                            <field name="company_id" />
+                        </group>
+                        <group string="Inventory evidence">
+                            <field name="move_id" />
+                            <field name="state" />
+                            <field name="cancel_reason" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_reservations" model="ir.actions.act_window">
+        <field name="name">Workshop Reservations</field>
+        <field name="res_model">garage.stock.reservation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="parts_list" model="ir.ui.view">
+        <field name="name">product.template.parts_list</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <list string="Automotive Parts">
+                <field name="name" />
+                <field name="default_code" />
+                <field name="barcode" />
+                <field name="garage_part_brand" />
+                <field name="garage_oem_reference" />
+                <field name="garage_aftermarket_reference" />
+                <field name="list_price" />
+                <field name="qty_available" groups="stock.group_stock_user" />
+            </list>
+        </field>
+    </record>
+    <record id="parts_search" model="ir.ui.view">
+        <field name="name">product.template.parts_search</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="95" />
+        <field name="arch" type="xml">
+            <search string="Parts Catalogue">
+                <field name="name" />
+                <field name="default_code" />
+                <field name="barcode" />
+                <field name="garage_oem_reference" />
+                <field name="garage_aftermarket_reference" />
+                <field name="garage_part_brand" />
+                <field name="categ_id" />
+            </search>
+        </field>
+    </record>
+    <record id="action_parts" model="ir.actions.act_window">
+        <field name="name">Parts Catalogue</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('garage_part', '=', True)]</field>
+        <field name="context">{'default_garage_part': True, 'default_type': 'consu'}</field>
+        <field name="view_id" ref="parts_list" />
+        <field name="search_view_id" ref="parts_search" />
+    </record>
+    <record id="parts_product_details" model="ir.ui.view">
+        <field name="name">product.template.parts_product_details</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Automotive Part" invisible="not garage_part">
+                        <group>
+                            <group string="Part References">
+                                <field name="garage_oem_reference" />
+                                <field name="garage_aftermarket_reference" />
+                                <field name="garage_part_brand" />
+                                <field name="garage_part_manufacturer" />
+                                <field name="garage_mrp" />
+                                <field name="garage_warranty_months" />
+                            </group>
+                        </group>
+                        <group string="Alternatives and Supersession">
+                            <field name="garage_alternative_ids" widget="many2many_tags" />
+                            <field name="garage_superseded_by_id" />
+                        </group>
+                        <field name="garage_fitment_ids" readonly="1" />
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="vehicle_parts" model="ir.ui.view">
+        <field name="name">garage.vehicle.vehicle_parts</field>
+        <field name="model">garage.vehicle</field>
+        <field name="inherit_id" ref="garage_core.vehicle_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//sheet" position="inside">
+                    <div class="oe_button_box" name="garage_part_buttons">
+                        <button name="action_compatible_parts" type="object" string="Compatible Parts" icon="fa-cogs" groups="garage_core.group_garage_staff" invisible="not id" class="oe_stat_button" />
+                    </div>
+                </xpath>
+                <xpath expr="//group[field[@name='engine_capacity']]" position="inside">
+                    <field name="garage_engine_code" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="movement_stock" model="ir.ui.view">
+        <field name="name">garage.part.movement.movement_stock</field>
+        <field name="model">garage.part.movement</field>
+        <field name="inherit_id" ref="garage_workshop.garage_part_movement_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='recorded_at']" position="after">
+                    <field name="garage_reservation_id" groups="garage_suite_pro.group_garage_inventory" domain="[('job_id', '=', job_id), ('product_id', '=', product_id), ('state', '=', 'assigned')]" invisible="kind != 'issue'" />
+                    <field name="garage_stock_move_ids" groups="garage_suite_pro.group_garage_inventory" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="garage_company_stock" model="ir.ui.view">
+        <field name="name">res.company.garage_company_stock</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//sheet" position="inside">
+                    <group string="Garage Workshop Stock">
+                        <field name="garage_stock_warehouse_id" />
+                        <field name="garage_workshop_location_id" />
+                        <field name="garage_consumption_location_id" />
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

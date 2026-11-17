@@ -1,0 +1,71 @@
+<odoo>
+    <record id="job_billing_form" model="ir.ui.view">
+        <field name="name">job.billing.form</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_invoice" type="object" string="Create / Open Invoice" groups="garage_core.group_garage_cashier" invisible="state != 'ready'" />
+                <button name="action_credit_release" type="object" string="Authorize Credit Release" groups="garage_core.group_garage_manager" invisible="state != 'ready'" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Billing" groups="garage_core.group_garage_cashier">
+                    <field name="invoice_ids" readonly="1" />
+                    <group groups="garage_core.group_garage_manager">
+                        <field name="credit_release_reason" />
+                        <field name="credit_release_by" />
+                        <field name="credit_release_at" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">invoice.garage.source</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Garage Visit" invisible="not garage_job_id">
+                    <group>
+                        <field name="garage_job_id" readonly="1" />
+                        <field name="garage_estimate_id" readonly="1" />
+                        <field name="garage_correction_reason" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <menuitem id="billing_menu" name="Service Billing" parent="garage_core.menu_garage_root" sequence="50" groups="garage_core.group_garage_cashier" />
+    <record id="invoice_action" model="ir.actions.act_window">
+        <field name="name">Service Invoices and Credit Notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('garage_job_id','!=',False)]</field>
+    </record>
+    <menuitem id="invoices" name="Invoices and Credit Notes" parent="billing_menu" action="invoice_action" />
+    <record id="payments_action" model="ir.actions.act_window">
+        <field name="name">Customer Payments</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('partner_type','=','customer'), ('garage_payment','=',True)]</field>
+    </record>
+    <menuitem id="payments" name="Payments and Receipts" parent="billing_menu" action="payments_action" />
+    <menuitem id="finance_config" name="Billing Configuration" parent="garage_service_master.configuration" groups="account.group_account_manager" />
+    <menuitem id="taxes" name="Taxes" parent="finance_config" action="account.action_tax_form" />
+    <menuitem id="journals" name="Journals" parent="finance_config" action="account.action_account_journal_form" />
+    <menuitem id="fiscal_positions" name="Fiscal Positions" parent="finance_config" action="account.action_account_fiscal_position_form" />
+    <record id="partner_service_documents" model="ir.ui.view">
+        <field name="name">partner.garage.billing.history</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="garage_core.view_partner_garage" />
+        <field name="arch" type="xml">
+            <field name="garage_job_card_ids" position="after">
+                <separator string="Service Estimate Versions" groups="garage_core.group_garage_user,garage_core.group_garage_cashier,garage_core.group_garage_owner" />
+                <field name="garage_estimate_ids" readonly="1" />
+                <separator string="Service Invoices and Balances" groups="garage_core.group_garage_cashier,garage_core.group_garage_owner" />
+                <field name="garage_invoice_ids" readonly="1" />
+            </field>
+        </field>
+    </record>
+</odoo>

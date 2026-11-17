@@ -1,0 +1,61 @@
+<odoo>
+    <record id="report_export_form" model="ir.ui.view">
+        <field name="name">garage.report.export.form</field>
+        <field name="model">garage.report.export</field>
+        <field name="arch" type="xml">
+            <form string="Export a Garage Report" class="gs-workspace-form">
+                <group>
+                    <field name="report_key"/>
+                    <group string="Report period">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_pdf" type="object" string="Download PDF" icon="fa-file-pdf-o" class="btn-primary"/>
+                    <button name="action_excel" type="object" string="Download Excel" icon="fa-file-excel-o" class="btn-secondary"/>
+                    <button string="Close" special="cancel" class="btn-link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_report_export" model="ir.actions.act_window">
+        <field name="name">Export Reports</field>
+        <field name="res_model">garage.report.export</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_export" name="Export PDF or Excel" parent="reports_menu" action="action_report_export" sequence="5"/>
+    <record id="export_landscape" model="report.paperformat">
+        <field name="name">Garage Landscape</field>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">32</field>
+    </record>
+    <record id="action_export_pdf" model="ir.actions.report">
+        <field name="name">Garage Report</field>
+        <field name="model">garage.report.export</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">garage_basic_reports.export_pdf</field>
+        <field name="paperformat_id" ref="export_landscape"/>
+    </record>
+    <template id="export_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 t-out="title"/>
+                        <p t-if="o.date_from or o.date_to">
+                            <span t-field="o.date_from"/> – <span t-field="o.date_to"/>
+                        </p>
+                        <p t-if="not rows">No records match this report and period.</p>
+                        <table t-if="rows" class="table table-sm table-striped" style="font-size: 9pt; overflow-wrap: anywhere;">
+                            <thead><tr><th t-foreach="headers" t-as="header" t-out="header"/></tr></thead>
+                            <tbody><tr t-foreach="rows" t-as="row"><td t-foreach="row" t-as="cell" t-out="cell"/></tr></tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

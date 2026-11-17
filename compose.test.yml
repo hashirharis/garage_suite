@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:17.6
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U odoo -d postgres]
+      interval: 2s
+      retries: 30
+  odoo:
+    image: odoo:19.0
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - garage_test_data:/var/lib/odoo
+      - .:/mnt/garage:ro
+      - ../suite_theme:/mnt/suite_theme:ro
+      - ../../addons:/mnt/shared-addons:ro
+    command: [odoo, --db_host=db, --db_user=odoo, --db_password=odoo, "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/garage,/mnt,/mnt/shared-addons", -d, garage_foundation_test, -i, garage_suite_basic, --test-enable, "--test-tags=/suite_theme,/garage_core,/garage_service_master,/garage_workshop,/garage_service_billing,/garage_crm,/garage_basic_reports,/garage_suite_basic", --stop-after-init, --without-demo, --no-http, --log-level=test]
+
+volumes:
+  garage_test_data:

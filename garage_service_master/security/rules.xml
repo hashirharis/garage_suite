@@ -1,0 +1,62 @@
+<odoo>
+    <record id="garage_vehicle_make_company" model="ir.rule">
+        <field name="name">Vehicle Make companies</field>
+        <field name="model_id" ref="model_garage_vehicle_make" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_vehicle_model_company" model="ir.rule">
+        <field name="name">Vehicle Model companies</field>
+        <field name="model_id" ref="model_garage_vehicle_model" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_vehicle_variant_company" model="ir.rule">
+        <field name="name">Vehicle Variant companies</field>
+        <field name="model_id" ref="model_garage_vehicle_variant" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_vehicle_category_company" model="ir.rule">
+        <field name="name">Vehicle Category companies</field>
+        <field name="model_id" ref="model_garage_vehicle_category" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_category_company" model="ir.rule">
+        <field name="name">Service Category companies</field>
+        <field name="model_id" ref="model_garage_service_category" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_type_company" model="ir.rule">
+        <field name="name">Service Type companies</field>
+        <field name="model_id" ref="model_garage_service_type" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_bay_company" model="ir.rule">
+        <field name="name">Service Bay companies</field>
+        <field name="model_id" ref="model_garage_service_bay" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_technician_skill_company" model="ir.rule">
+        <field name="name">Technician Skill companies</field>
+        <field name="model_id" ref="model_garage_technician_skill" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_operation_company" model="ir.rule">
+        <field name="name">Service Operation companies</field>
+        <field name="model_id" ref="model_garage_service_operation" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_labour_rate_company" model="ir.rule">
+        <field name="name">Labour Rate companies</field>
+        <field name="model_id" ref="model_garage_labour_rate" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="garage_service_package_company" model="ir.rule">
+        <field name="name">Service Package companies</field>
+        <field name="model_id" ref="model_garage_service_package" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="hold_reason_company" model="ir.rule">
+        <field name="name">Waiting reason company scope</field>
+        <field name="model_id" ref="model_garage_hold_reason" />
+        <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+    </record>
+</odoo>

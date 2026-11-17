@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_garage_root" name="Garage Suite Basic" sequence="10" groups="garage_core.group_garage_staff" />
+    <menuitem id="menu_customers" name="Customers" parent="menu_garage_root" action="action_customers" sequence="10" />
+    <menuitem id="menu_vehicles" name="Vehicles" parent="menu_garage_root" action="action_vehicles" sequence="20" />
+    <menuitem id="menu_workshop" name="Workshop" parent="menu_garage_root" sequence="30" />
+    <menuitem id="menu_jobs" name="Job Cards" parent="menu_workshop" action="action_jobs" sequence="10" />
+</odoo>

@@ -1,0 +1,442 @@
+<odoo>
+    <menuitem id="appointments_menu" name="Appointments" parent="garage_core.menu_garage_root" sequence="25" />
+    <menuitem id="estimates_menu" name="Estimates" parent="garage_core.menu_garage_root" sequence="40" />
+    <menuitem id="followups_menu" name="Follow-ups" parent="garage_core.menu_garage_root" sequence="60" />
+    <record id="garage_appointment_list" model="ir.ui.view">
+        <field name="name">garage.appointment.list</field>
+        <field name="model">garage.appointment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="customer_id" />
+                <field name="vehicle_id" />
+                <field name="bay_id" />
+                <field name="start" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_appointment_form" model="ir.ui.view">
+        <field name="name">garage.appointment.form</field>
+        <field name="model">garage.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_arrived" type="object" string="Mark Arrived" invisible="state != 'booked'" />
+                    <button name="action_convert" type="object" string="Open Job Card" invisible="state not in ['arrived','converted']" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="customer_id" />
+                        <field name="vehicle_id" />
+                        <field name="bay_id" />
+                        <field name="start" />
+                        <field name="end" />
+                        <field name="complaint" />
+                        <field name="odometer" />
+                        <field name="state" />
+                        <field name="change_reason" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">garage.appointment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_appointment_menu" name="Appointment" parent="appointments_menu" action="garage_appointment_action" />
+    <record id="garage_inspection_template_list" model="ir.ui.view">
+        <field name="name">garage.inspection.template.list</field>
+        <field name="model">garage.inspection.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="phase" />
+                <field name="default_for_jobs" />
+                <field name="company_id" />
+                <field name="line_ids" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_inspection_template_form" model="ir.ui.view">
+        <field name="name">garage.inspection.template.form</field>
+        <field name="model">garage.inspection.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="phase" />
+                        <field name="default_for_jobs" />
+                        <field name="company_id" />
+                    </group>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="name" />
+                            <field name="mandatory" />
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_inspection_template_action" model="ir.actions.act_window">
+        <field name="name">Inspection Template</field>
+        <field name="res_model">garage.inspection.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_inspection_template_menu" name="Inspection Template" parent="garage_service_master.service_masters" action="garage_inspection_template_action" />
+    <record id="garage_inspection_list" model="ir.ui.view">
+        <field name="name">garage.inspection.list</field>
+        <field name="model">garage.inspection</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="job_id" />
+                <field name="template_id" />
+                <field name="phase" />
+                <field name="state" />
+                <field name="line_ids" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_inspection_form" model="ir.ui.view">
+        <field name="name">garage.inspection.form</field>
+        <field name="model">garage.inspection</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sign" type="object" string="Sign Inspection" invisible="state != 'draft'" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1" /></h1>
+                    </div>
+                    <group>
+                        <field name="job_id" />
+                        <field name="template_id" />
+                        <field name="phase" />
+                        <field name="state" />
+                        <field name="signed_by" />
+                        <field name="signed_at" />
+                    </group>
+                    <field name="line_ids" readonly="state != 'draft'">
+                        <list editable="bottom" create="0" delete="0">
+                            <field name="name" />
+                            <field name="mandatory" />
+                            <field name="result" />
+                            <field name="remarks" />
+                            <field name="photo" widget="image" />
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_inspection_action" model="ir.actions.act_window">
+        <field name="name">Inspection</field>
+        <field name="res_model">garage.inspection</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_inspection_menu" name="Inspection" parent="garage_core.menu_workshop" action="garage_inspection_action" />
+    <record id="garage_job_time_entry_list" model="ir.ui.view">
+        <field name="name">garage.job.time.entry.list</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="job_id" />
+                <field name="operation_line_id" />
+                <field name="technician_id" />
+                <field name="start" />
+                <field name="end" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_job_time_entry_form" model="ir.ui.view">
+        <field name="name">garage.job.time.entry.form</field>
+        <field name="model">garage.job.time.entry</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_stop" type="object" string="Stop Timer" invisible="end" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1" /></h1>
+                    </div>
+                    <group>
+                        <field name="job_id" />
+                        <field name="operation_line_id" />
+                        <field name="technician_id" />
+                        <field name="start" />
+                        <field name="end" />
+                        <field name="hours" />
+                        <field name="notes" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_job_time_entry_action" model="ir.actions.act_window">
+        <field name="name">Job Time Entry</field>
+        <field name="res_model">garage.job.time.entry</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_job_time_entry_menu" name="Job Time Entry" parent="garage_core.menu_workshop" action="garage_job_time_entry_action" />
+    <record id="garage_part_movement_list" model="ir.ui.view">
+        <field name="name">garage.part.movement.list</field>
+        <field name="model">garage.part.movement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="job_id" />
+                <field name="product_id" />
+                <field name="kind" />
+                <field name="quantity" />
+                <field name="uom_id" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_part_movement_form" model="ir.ui.view">
+        <field name="name">garage.part.movement.form</field>
+        <field name="model">garage.part.movement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1" /></h1>
+                    </div>
+                    <group>
+                        <field name="job_id" />
+                        <field name="product_id" />
+                        <field name="kind" />
+                        <field name="quantity" />
+                        <field name="uom_id" />
+                        <field name="reason" />
+                        <field name="actor_id" />
+                        <field name="recorded_at" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_part_movement_action" model="ir.actions.act_window">
+        <field name="name">Part Movement</field>
+        <field name="res_model">garage.part.movement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_part_movement_menu" name="Part Movement" parent="garage_core.menu_workshop" action="garage_part_movement_action" />
+    <record id="garage_service_reminder_list" model="ir.ui.view">
+        <field name="name">garage.service.reminder.list</field>
+        <field name="model">garage.service.reminder</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="customer_id" />
+                <field name="vehicle_id" />
+                <field name="job_id" />
+                <field name="due_date" />
+            </list>
+        </field>
+    </record>
+    <record id="garage_service_reminder_form" model="ir.ui.view">
+        <field name="name">garage.service.reminder.form</field>
+        <field name="model">garage.service.reminder</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_followed_up" type="object" string="Mark Followed Up" invisible="state != 'pending'" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="customer_id" />
+                        <field name="vehicle_id" />
+                        <field name="job_id" />
+                        <field name="due_date" />
+                        <field name="due_odometer" />
+                        <field name="kind" />
+                        <field name="state" />
+                        <field name="contact_permitted" />
+                        <field name="channel" />
+                        <field name="assigned_id" />
+                        <field name="feedback" />
+                        <field name="satisfaction" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="garage_service_reminder_action" model="ir.actions.act_window">
+        <field name="name">Service Reminder</field>
+        <field name="res_model">garage.service.reminder</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="garage_service_reminder_menu" name="Service Reminder" parent="followups_menu" action="garage_service_reminder_action" />
+    <record id="appointments_calendar" model="ir.ui.view">
+        <field name="name">garage.appointment.calendar</field>
+        <field name="model">garage.appointment</field>
+        <field name="arch" type="xml">
+            <calendar date_start="start" date_stop="end" color="bay_id">
+                <field name="customer_id" />
+                <field name="vehicle_id" />
+                <field name="state" />
+            </calendar>
+        </field>
+    </record>
+    <record id="appointments_calendar_action" model="ir.actions.act_window">
+        <field name="name">Appointment Calendar</field>
+        <field name="res_model">garage.appointment</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+    <menuitem id="appointments_calendar_menu" name="Calendar" parent="appointments_menu" action="appointments_calendar_action" sequence="1" />
+    <record id="estimate_action" model="ir.actions.act_window">
+        <field name="name">Service Estimates</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('garage_job_id','!=',False)]</field>
+    </record>
+    <menuitem id="estimate_list" name="Estimate Versions" parent="estimates_menu" action="estimate_action" />
+    <record id="estimate_form" model="ir.ui.view">
+        <field name="name">garage.estimate.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_garage_issue" type="object" string="Issue Service Estimate" invisible="not garage_job_id or garage_consent != 'draft'" />
+                <button name="action_garage_approve" type="object" string="Record Customer Approval" invisible="not garage_job_id or garage_consent != 'issued'" />
+                <button name="action_garage_reject" type="object" string="Record Rejection" invisible="not garage_job_id or garage_consent != 'issued'" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Garage Consent" invisible="not garage_job_id">
+                    <group>
+                        <field name="garage_job_id" readonly="1" />
+                        <field name="garage_version" />
+                        <field name="garage_consent" readonly="1" />
+                        <field name="garage_approver_id" />
+                        <field name="garage_consent_channel" />
+                        <field name="garage_consent_evidence" />
+                        <field name="garage_recorded_by" />
+                        <field name="garage_recorded_at" />
+                        <field name="garage_response_note" />
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly" add="(garage_job_id and garage_consent != 'draft')" separator=" or " />
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible" add="(garage_job_id and garage_consent != 'approved')" separator=" or " />
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible" add="garage_job_id" separator=" or " />
+            </xpath>
+        </field>
+    </record>
+    <record id="job_workshop_form" model="ir.ui.view">
+        <field name="name">job.workshop.operations</field>
+        <field name="model">garage.job.card</field>
+        <field name="inherit_id" ref="garage_core.job_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_estimate" type="object" string="Prepare Estimate / Revision" groups="garage_core.group_garage_user" invisible="state not in ['diagnosing','awaiting_approval','authorized','in_progress','on_hold']" />
+                <button name="action_generate_inspections" type="object" string="Generate Inspections" groups="garage_core.group_garage_user" />
+                <button name="action_progress" type="object" string="Next Stage" invisible="state not in ['authorized','in_progress','quality_check','ready','delivered','on_hold']" />
+                <button name="action_hold" type="object" string="Put On Hold" invisible="state != 'in_progress'" />
+                <button name="action_rework" type="object" string="Rework / Reopen" groups="garage_core.group_garage_manager" invisible="state not in ['quality_check','ready','closed']" />
+            </xpath>
+            <field name="state" position="attributes">
+                <attribute name="statusbar_visible">draft,diagnosing,awaiting_approval,authorized,in_progress,quality_check,ready,delivered,closed</attribute>
+            </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="Inspections">
+                    <field name="inspection_template_ids" widget="many2many_tags" />
+                    <field name="inspection_ids" readonly="1" />
+                </page>
+                <page string="Estimates" groups="garage_core.group_garage_user,garage_core.group_garage_cashier,garage_core.group_garage_owner">
+                    <field name="estimate_ids" readonly="1" />
+                </page>
+                <page string="Labour and Parts">
+                    <field name="work_complete" />
+                    <field name="actual_hours" />
+                    <separator string="Labour Time" />
+                    <field name="time_entry_ids" />
+                    <separator string="Parts Evidence (no warehouse stock)" />
+                    <field name="part_movement_ids" />
+                </page>
+                <page string="Hold and Delivery">
+                    <group>
+                        <field name="appointment_id" readonly="1" />
+                        <field name="hold_reason_id" />
+                        <field name="hold_reason" />
+                        <field name="hold_resolution" />
+                        <field name="hold_responsible_id" />
+                        <field name="prior_state" />
+                        <field name="exception_reason" />
+                        <field name="delivery_recipient" />
+                        <field name="delivery_acknowledgment" />
+                        <field name="delivery_signature" widget="signature" />
+                        <field name="delivered_at" />
+                        <field name="closed_at" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="partner_consent_form" model="ir.ui.view">
+        <field name="name">partner.garage.consent</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="garage_core.view_partner_garage" />
+        <field name="arch" type="xml">
+            <field name="garage_notes" position="after">
+                <field name="garage_service_consent" />
+                <field name="garage_marketing_consent" />
+                <field name="garage_preferred_channel" />
+            </field>
+        </field>
+    </record>
+    <record id="product_master_action" model="ir.actions.act_window">
+        <field name="name">Service Products and Parts</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="products_menu" name="Service Products and Parts" parent="garage_service_master.service_masters" action="product_master_action" />
+    <record id="users_action" model="ir.actions.act_window">
+        <field name="name">Staff and Roles</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="users_menu" name="Staff and Roles" parent="garage_service_master.configuration" action="users_action" groups="base.group_system" />
+    <record id="workshop_settings_form" model="ir.ui.view">
+        <field name="name">settings.garage.operations</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Garage Suite" name="garage_suite" groups="base.group_system">
+                    <block title="Workshop Policies">
+                        <setting string="Estimate Validity (days)">
+                            <field name="garage_estimate_validity_days" />
+                        </setting>
+                        <setting string="Maximum Advisor Discount (%)" help="Larger discounts require a Garage Manager.">
+                            <field name="garage_advisor_discount_limit" />
+                        </setting>
+                        <setting string="Expiry Reminder Lead Time (days)">
+                            <field name="garage_reminder_lead_days" />
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+    <record id="workshop_settings_action" model="ir.actions.act_window">
+        <field name="name">Garage Policies and Company Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module':'garage_suite'}</field>
+    </record>
+    <menuitem id="workshop_settings_menu" name="Garage Policies" parent="garage_service_master.configuration" action="workshop_settings_action" groups="base.group_system" />
+</odoo>
