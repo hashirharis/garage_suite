@@ -114,6 +114,7 @@ class WorkshopDemo:
                 city=self.profile['cities'][index % len(self.profile['cities'])],
                 country_id=self.company.country_id.id, state_id=self.company.state_id.id,
                 email=email,
+                property_product_pricelist=self.pricelist.id,
                 customer_rank=1, is_garage_customer=True, garage_service_consent=True,
                 garage_notes='Synthetic customer for workshop demonstrations.',
             )
@@ -132,6 +133,19 @@ class WorkshopDemo:
         return fleet
 
     def populate(self):
+        # Sales/Stock validates the company warehouse when estimates are confirmed.
+        # Prepare it before the first visit, including when seeding through Apps.
+        if 'stock.warehouse' in self.env:
+            warehouse = self.env['stock.warehouse'].search([
+                ('company_id', '=', self.company.id),
+            ], limit=1)
+            if not warehouse:
+                self._create('stock.warehouse', name='Demo Workshop Warehouse', code='DEMO')
+
+        # Keep quotations in the demo company's currency on multi-country databases.
+        self.pricelist = self._create(
+            'product.pricelist', name='Demo Workshop Prices', currency_id=self.company.currency_id.id,
+        )
         service_price, part_price, _ = self.profile['prices']
         category = self._create('garage.service.category', name='Scheduled and corrective maintenance')
         self.service_type = self._create('garage.service.type', name='Workshop service')
